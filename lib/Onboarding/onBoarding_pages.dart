@@ -23,6 +23,7 @@ class OnboardingPages extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: ElevatedButton(
                 style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(ColorPalette.darkMainText),
                   shape: WidgetStatePropertyAll(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadiusGeometry.circular(10),
