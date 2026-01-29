@@ -1,47 +1,66 @@
+import 'package:eventapp/core/constants/AppTexts.dart';
+import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class OnboardingPages extends StatefulWidget {
-  const OnboardingPages({super.key});
+import '../core/gen/assets.gen.dart';
+import 'onBoarding_pages_details.dart';
 
-  @override
-  State<OnboardingPages> createState() => _OnboardingPagesState();
-}
+class OnboardingPages extends StatelessWidget {
+  static final PageController controller = PageController();
+   OnboardingPages({super.key});
 
-class _OnboardingPagesState extends State<OnboardingPages> {
-  final PageController _controller = PageController();
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: Assets.images.eventlyLogo.image(width: 243, height: 32),
+        centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: ElevatedButton(
+                style: ButtonStyle(
+                  shape: WidgetStatePropertyAll(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadiusGeometry.circular(10),
+                    ),
+                  ),
+                ),
+                onPressed: () {},
+                child: Text(
+                  "Skip",
+                  style: textTheme.bodyMedium
+                      ?.copyWith(color: ColorPalette.lightMainColor),
+                )),
+          )
+        ],
+      ),
       body: SafeArea(
           child: Stack(
         children: [
           PageView(
-            controller: _controller,
+            controller: controller,
             children: [
-              Container(
-                child: const Center(
-                    child: Text(
-                  "page1",
-                  style: TextStyle(color: Colors.black),
-                )),
+              OnboardingPagesDetails(
+                title: AppTexts.onBoardingTitle1,
+                description: AppTexts.onBoardingDescription1,
+                image: Assets.images.hotTrending.keyName,
               ),
-              Container(
-                child: const Center(
-                    child:
-                        Text("page2", style: TextStyle(color: Colors.black))),
+              OnboardingPagesDetails(
+                title: AppTexts.onBoardingTitle2,
+                description: AppTexts.onBoardingDescription2,
+                image: Assets.images.eventPlanning.keyName,
               ),
-              Container(
-                child: const Center(
-                    child:
-                        Text("page3", style: TextStyle(color: Colors.black))),
+              OnboardingPagesDetails(
+                title: AppTexts.onBoardingTitle3,
+                description: AppTexts.onBoardingDescription3,
+                image: Assets.images.connectWithFriends.keyName,
               ),
             ],
           ),
-          Positioned(
-            bottom: 50,
-              left: 150,
-              child: SmoothPageIndicator(controller: _controller, count: 3))
         ],
       )),
     );

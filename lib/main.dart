@@ -1,5 +1,3 @@
-import 'package:eventapp/Onboarding/OnbourdingScreen.dart';
-import 'package:eventapp/SplashView/SplashScreen.dart';
 import 'package:eventapp/core/Routes/app_router.dart';
 import 'package:eventapp/core/theme/ThemeManager.dart';
 import 'package:flutter/material.dart';

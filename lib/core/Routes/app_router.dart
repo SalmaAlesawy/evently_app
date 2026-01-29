@@ -1,7 +1,6 @@
 import 'package:eventapp/Onboarding/OnbourdingScreen.dart';
 import 'package:eventapp/SplashView/SplashScreen.dart';
 import 'package:eventapp/core/Routes/pages_route_names.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../Onboarding/onBoarding_pages.dart';
@@ -22,7 +21,7 @@ abstract class AppRouter {
         );
       case PageRouteName.onBoardingPages:
         return MaterialPageRoute(
-          builder: (context) => const OnboardingPages(),
+          builder: (context) =>  OnboardingPages(),
           settings: settings,
         );
       default:

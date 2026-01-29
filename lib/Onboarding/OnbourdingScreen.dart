@@ -1,6 +1,5 @@
 import 'package:eventapp/core/Routes/pages_route_names.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
-import 'package:eventapp/core/theme/ThemeManager.dart';
 import 'package:flutter/material.dart';
 
 import '../core/gen/assets.gen.dart';
