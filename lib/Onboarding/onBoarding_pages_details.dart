@@ -2,19 +2,21 @@ import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../core/gen/assets.gen.dart';
 import 'onBoarding_pages.dart';
 
 class OnboardingPagesDetails extends StatefulWidget {
   final String title;
   final String description;
   final String image;
+  final String? doneText;
   static PageController controller = OnboardingPages.controller;
+
   const OnboardingPagesDetails({
     super.key,
     required this.title,
     required this.description,
     required this.image,
+     this.doneText,
   });
 
   @override
@@ -76,10 +78,15 @@ class _OnboardingPagesDetailsState extends State<OnboardingPagesDetails> {
                     shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16)))),
                 onPressed: () {
-                  OnboardingPagesDetails.controller.nextPage(duration: const Duration(seconds: 1), curve: Curves.easeInOut);
-                  
+                  OnboardingPagesDetails.controller.nextPage(duration: const Duration(milliseconds: 600), curve: Curves.easeInOut);
+                  if(OnboardingPagesDetails.controller.page==2){
+
+                  }
+                  setState(() {
+
+                  });
                 },
-                child: const Text("Next"))
+                child:  Text(widget.doneText ?? "Next"))
           ],
         ),
       ),
