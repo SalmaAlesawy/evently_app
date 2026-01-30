@@ -1,7 +1,9 @@
+import 'package:eventapp/core/Routes/pages_route_names.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../widgets/CustomElevatedButton.dart' show Customelevatedbutton;
 import 'onBoarding_pages.dart';
 
 class OnboardingPagesDetails extends StatefulWidget {
@@ -16,7 +18,7 @@ class OnboardingPagesDetails extends StatefulWidget {
     required this.title,
     required this.description,
     required this.image,
-     this.doneText,
+    this.doneText,
   });
 
   @override
@@ -34,8 +36,14 @@ class _OnboardingPagesDetailsState extends State<OnboardingPagesDetails> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(flex: 5,child: Center(child: Image.asset(widget.image,width: 343,height:343,))),
-
+            Expanded(
+                flex: 5,
+                child: Center(
+                    child: Image.asset(
+                  widget.image,
+                  width: 343,
+                  height: 343,
+                ))),
             Center(
               child: SmoothPageIndicator(
                 controller: OnboardingPagesDetails.controller,
@@ -66,27 +74,21 @@ class _OnboardingPagesDetailsState extends State<OnboardingPagesDetails> {
             const SizedBox(
               height: 16,
             ),
-            ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor:
-                        WidgetStatePropertyAll(ColorPalette.lightMainColor),
-                    foregroundColor:
-                        WidgetStatePropertyAll(ColorPalette.darkMainText),
-                    textStyle: WidgetStatePropertyAll(textTheme.titleLarge),
-                    padding: const WidgetStatePropertyAll(
-                        EdgeInsets.symmetric(vertical: 16)),
-                    shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)))),
-                onPressed: () {
-                  OnboardingPagesDetails.controller.nextPage(duration: const Duration(milliseconds: 600), curve: Curves.easeInOut);
-                  if(OnboardingPagesDetails.controller.page==2){
-
-                  }
-                  setState(() {
-
-                  });
-                },
-                child:  Text(widget.doneText ?? "Next"))
+            Customelevatedbutton(
+              backGroundColor:WidgetStatePropertyAll(ColorPalette.lightMainColor) ,
+              forGroundColor:WidgetStatePropertyAll(ColorPalette.white) ,
+              buttonText: widget.doneText ?? "Next",
+              onPressed: () {
+                OnboardingPagesDetails.controller.nextPage(
+                    duration: const Duration(milliseconds: 600),
+                    curve: Curves.easeInOut);
+                if (OnboardingPagesDetails.controller.page == 2) {
+                  Navigator.pushReplacementNamed(
+                      context, PageRouteName.loginScreen);
+                }
+                setState(() {});
+              },
+            )
           ],
         ),
       ),

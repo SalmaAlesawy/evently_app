@@ -1,3 +1,4 @@
+import 'package:eventapp/core/Routes/pages_route_names.dart';
 import 'package:eventapp/core/constants/AppTexts.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class OnboardingPages extends StatelessWidget {
                   ? IconButton(
                       style: ButtonStyle(
                           backgroundColor:
-                              WidgetStatePropertyAll(ColorPalette.darkMainText),
+                              WidgetStatePropertyAll(ColorPalette.white),
                           foregroundColor: WidgetStatePropertyAll(
                               ColorPalette.lightMainColor),
                           shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -46,14 +47,16 @@ class OnboardingPages extends StatelessWidget {
             child: ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      WidgetStatePropertyAll(ColorPalette.darkMainText),
+                      WidgetStatePropertyAll(ColorPalette.white),
                   shape: WidgetStatePropertyAll(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadiusGeometry.circular(10),
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, PageRouteName.loginScreen);
+                },
                 child: Text(
                   "Skip",
                   style: textTheme.bodyMedium

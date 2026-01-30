@@ -28,8 +28,14 @@ abstract class ThemeManager{
       ),
           bodyMedium:TextStyle(
               fontFamily: "Poppins",
-            color: ColorPalette.lightInputs,
+            color: ColorPalette.white,
             fontSize: 14,
+            fontWeight: FontWeight.w600
+          ),
+          headlineSmall:TextStyle(
+            fontFamily: "Poppins",
+            color: ColorPalette.lightMainColor,
+            fontSize: 24,
             fontWeight: FontWeight.w600
           )
 

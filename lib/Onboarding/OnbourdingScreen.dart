@@ -50,7 +50,7 @@ class Onbourdingscreen extends StatelessWidget {
                         backgroundColor:
                             WidgetStatePropertyAll(ColorPalette.lightMainColor),
                         foregroundColor:
-                            WidgetStatePropertyAll(ColorPalette.darkMainText),
+                            WidgetStatePropertyAll(ColorPalette.white),
                         shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)))),
                     onPressed: () {},
@@ -61,7 +61,7 @@ class Onbourdingscreen extends StatelessWidget {
                 ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
-                            WidgetStatePropertyAll(ColorPalette.darkMainText),
+                            WidgetStatePropertyAll(ColorPalette.white),
                         foregroundColor:
                             WidgetStatePropertyAll(ColorPalette.lightMainColor),
                         shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -84,7 +84,7 @@ class Onbourdingscreen extends StatelessWidget {
                       backgroundColor:
                           WidgetStatePropertyAll(ColorPalette.lightMainColor),
                       foregroundColor:
-                          WidgetStatePropertyAll(ColorPalette.darkMainText),
+                          WidgetStatePropertyAll(ColorPalette.white),
                       shape: WidgetStatePropertyAll(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -99,7 +99,7 @@ class Onbourdingscreen extends StatelessWidget {
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        WidgetStatePropertyAll(ColorPalette.darkMainText),
+                        WidgetStatePropertyAll(ColorPalette.white),
                     foregroundColor:
                         WidgetStatePropertyAll(ColorPalette.lightMainColor),
                     shape: WidgetStatePropertyAll(
@@ -123,7 +123,7 @@ class Onbourdingscreen extends StatelessWidget {
                       backgroundColor:
                           WidgetStatePropertyAll(ColorPalette.lightMainColor),
                       foregroundColor:
-                          WidgetStatePropertyAll(ColorPalette.darkMainText),
+                          WidgetStatePropertyAll(ColorPalette.white),
                       shape: WidgetStatePropertyAll(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -133,7 +133,7 @@ class Onbourdingscreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushReplacementNamed(context, PageRouteName.onBoardingPages);
                     },
-                    child:  Text("Let's Start",style: textTheme.titleLarge?.copyWith(color: ColorPalette.darkMainText),)),
+                    child:  Text("Let's Start",style: textTheme.titleLarge?.copyWith(color: ColorPalette.white),)),
               ),
             )
           ],
