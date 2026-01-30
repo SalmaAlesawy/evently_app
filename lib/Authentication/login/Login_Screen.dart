@@ -2,6 +2,7 @@ import 'package:eventapp/core/Routes/pages_route_names.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:eventapp/widgets/CustemTextformField.dart';
 import 'package:eventapp/widgets/CustomElevatedButton.dart';
+import 'package:eventapp/widgets/CustomeTextButton.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/gen/assets.gen.dart';
@@ -107,34 +108,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                TextButton(
-                  style: ButtonStyle(
-                    overlayColor:
-                        const WidgetStatePropertyAll(Colors.transparent),
-                    shadowColor:
-                        const WidgetStatePropertyAll(Colors.transparent),
-                    foregroundColor:
-                        WidgetStatePropertyAll(ColorPalette.lightMainColor),
-                    alignment: Alignment.centerRight,
-                  ),
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, PageRouteName.forgerPasswordScreen);
-                  },
-                  child: Text(
-                    style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        decorationThickness: 2,
-                        decorationColor: ColorPalette.lightMainColor),
-                    "Forget Password?",
-                  ),
-                ),
+                Custometextbutton(
+                    textButton: "Forger password?",
+                    onpressed: () {
+                      Navigator.pushNamed(
+                          context, PageRouteName.forgerPasswordScreen);
+                    }),
                 const SizedBox(
                   height: 40,
                 ),
                 Customelevatedbutton(
-                  backGroundColor:
-                      WidgetStatePropertyAll(ColorPalette.lightMainColor),
-                  forGroundColor: WidgetStatePropertyAll(ColorPalette.white),
                   buttonText: "Login",
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
@@ -157,25 +140,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: textTheme.bodyMedium
                           ?.copyWith(color: ColorPalette.lightSecText),
                     ),
-                    TextButton(
-                      style: ButtonStyle(
-                        overlayColor:
-                            const WidgetStatePropertyAll(Colors.transparent),
-                        shadowColor:
-                            const WidgetStatePropertyAll(Colors.transparent),
-                        foregroundColor:
-                            WidgetStatePropertyAll(ColorPalette.lightMainColor),
-                      ),
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(context, PageRouteName.registerScreen);
+                    Custometextbutton(
+
+                      onpressed: () {
+                        Navigator.pushReplacementNamed(
+                            context, PageRouteName.registerScreen);
                       },
-                      child: Text(
-                        "Sign up",
-                        style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            decorationThickness: 2,
-                            decorationColor: ColorPalette.lightMainColor),
-                      ),
+                      textButton: "Sign up",
                     ),
                   ],
                 ),

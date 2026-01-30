@@ -1,6 +1,5 @@
+import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:flutter/material.dart';
-
-
 
 class Customelevatedbutton extends StatelessWidget {
   const Customelevatedbutton(
@@ -9,7 +8,7 @@ class Customelevatedbutton extends StatelessWidget {
       this.onPressed,
       this.backGroundColor,
       this.forGroundColor,
-         this.image});
+      this.image});
   final String buttonText;
   final void Function()? onPressed;
   final WidgetStateProperty<Color?>? backGroundColor;
@@ -21,11 +20,12 @@ class Customelevatedbutton extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
     return ElevatedButton(
         style: ButtonStyle(
-          shadowColor: const WidgetStatePropertyAll(Colors.transparent),
+            shadowColor: const WidgetStatePropertyAll(Colors.transparent),
             overlayColor: const WidgetStatePropertyAll(Colors.transparent),
-            backgroundColor:
-                backGroundColor,
-            foregroundColor: forGroundColor,
+            backgroundColor: backGroundColor ??
+                WidgetStatePropertyAll(ColorPalette.lightMainColor),
+            foregroundColor:
+                forGroundColor ?? WidgetStatePropertyAll(ColorPalette.white),
             textStyle: WidgetStatePropertyAll(textTheme.titleLarge),
             padding: const WidgetStatePropertyAll(
                 EdgeInsets.symmetric(vertical: 16)),
@@ -37,8 +37,14 @@ class Customelevatedbutton extends StatelessWidget {
             : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(image!,width: 24,height: 24,),
-                  const SizedBox(width: 10,),
+                  Image.asset(
+                    image!,
+                    width: 24,
+                    height: 24,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   Text(buttonText),
                 ],
               ));
