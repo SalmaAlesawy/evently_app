@@ -23,7 +23,9 @@ class ForgetPasswordScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8))),
                 backgroundColor: WidgetStatePropertyAll(ColorPalette.white),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               icon: const Icon(Icons.arrow_back_ios_new)),
         ),
         body: Padding(
