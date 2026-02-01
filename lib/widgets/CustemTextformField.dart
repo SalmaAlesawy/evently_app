@@ -12,6 +12,7 @@ class Custemtextformfield extends StatelessWidget {
     required this.obscureText,
     this.validator,
     this.controller,
+     this.maxLines=1,
   });
   final Widget? prefixIcon;
   final String hintText;
@@ -20,31 +21,35 @@ class Custemtextformfield extends StatelessWidget {
   bool obscureText = false;
   final String? Function(String?)? validator;
   final TextEditingController? controller;
+   int maxLines;
 
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
-    return TextFormField(
-      controller: controller,
-      validator: validator,
-      style: const TextStyle(color: Colors.black),
-      obscureText: obscureText,
-      keyboardType: keyboardType,
-      decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: textTheme.bodyMedium?.copyWith(
-            color: ColorPalette.lightSecText,
-          ),
-          prefixIcon:prefixIcon==null?null: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: prefixIcon,
-          ),
-          suffixIcon: suffixIcon,
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(16),
-              borderSide: BorderSide.none),
-          fillColor: ColorPalette.white,
-          filled: true),
+    return SizedBox(
+      child: TextFormField(
+        maxLines: maxLines,
+        controller: controller,
+        validator: validator,
+        style: const TextStyle(color: Colors.black),
+        obscureText: obscureText,
+        keyboardType: keyboardType,
+        decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: textTheme.bodyMedium?.copyWith(
+              color: ColorPalette.lightSecText,
+            ),
+            prefixIcon:prefixIcon==null?null: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: prefixIcon,
+            ),
+            suffixIcon: suffixIcon,
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: BorderSide.none),
+            fillColor: ColorPalette.white,
+            filled: true),
+      ),
     );
   }
 }

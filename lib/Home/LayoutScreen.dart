@@ -1,6 +1,7 @@
 import 'package:eventapp/Home/Favourite/FavourateScreen.dart';
 import 'package:eventapp/Home/Home_screen/Home_Screen.dart';
 import 'package:eventapp/Home/Profile/ProfileScreen.dart';
+import 'package:eventapp/core/Routes/pages_route_names.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:flutter/material.dart';
 
@@ -27,12 +28,14 @@ class _LayoutscreenState extends State<Layoutscreen> {
     return Scaffold(
         body: screens[currentIndex],
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(Icons.add),
+          onPressed: () {
+            Navigator.pushNamed(context, PageRouteName.addEvent);
+          },
           backgroundColor: ColorPalette.lightMainColor,
           foregroundColor: ColorPalette.white,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+          child: const Icon(Icons.add),
         ),
         bottomNavigationBar: BottomNavigationBar(
             onTap: (index) {

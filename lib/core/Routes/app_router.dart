@@ -7,6 +7,7 @@ import 'package:eventapp/SplashView/SplashScreen.dart';
 import 'package:eventapp/core/Routes/pages_route_names.dart';
 import 'package:flutter/material.dart';
 
+import '../../Events/addEvent/AddEvent.dart';
 import '../../Home/LayoutScreen.dart';
 import '../../Onboarding/onBoarding_pages.dart';
 
@@ -53,6 +54,8 @@ abstract class AppRouter {
           builder: (context) =>  Layoutscreen(),
           settings: settings,
         );
+      case PageRouteName.addEvent:
+        return MaterialPageRoute(builder: (context)=>Addevent(),settings: settings);
       default:
         return MaterialPageRoute(
           builder: (context) => const Splashscreen(),

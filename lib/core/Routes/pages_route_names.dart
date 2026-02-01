@@ -7,5 +7,6 @@ abstract class PageRouteName{
   static const String forgerPasswordScreen="/forgerPasswordScreen";
   static const String homeScreen="/homeScreen";
   static const String layoutScreen="/layoutScreen";
+  static const String addEvent="/addEvent";
 
 }

@@ -1,5 +1,5 @@
 import 'package:eventapp/core/theme/ColorPalette.dart';
-import 'package:eventapp/widgets/CustomRow.dart';
+import 'package:eventapp/widgets/CustomListView.dart';
 import 'package:eventapp/widgets/CustomStack.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
               height: 20,
             ),
             SizedBox(
-              width: 84,
+              width: double.infinity,
               height: 40,
               child: ListView.separated(
                 separatorBuilder: (context, index) {
@@ -50,8 +50,7 @@ class HomeScreen extends StatelessWidget {
                 },
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return Customelistview(
-
+                  return const Customelistview(
                   );
                 },
                 itemCount: 4,
