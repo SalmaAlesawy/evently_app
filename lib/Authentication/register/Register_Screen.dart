@@ -223,7 +223,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     })
               ],
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Text(
               "Or",
               style: textTheme.titleMedium?.copyWith(
@@ -231,7 +231,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   fontWeight: FontWeight.w500),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Customelevatedbutton(
               image: Assets.images.google.keyName,
               onPressed: () {},

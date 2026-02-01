@@ -126,6 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           content: Text("All fields are valid"),
                         ),
                       );
+                      Navigator.pushReplacementNamed(context, PageRouteName.layoutScreen);
                     }
                   },
                 ),

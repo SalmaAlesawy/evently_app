@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class Custemtextformfield extends StatelessWidget {
   Custemtextformfield({
     super.key,
-    required this.prefixIcon,
+     this.prefixIcon,
     required this.hintText,
     this.suffixIcon,
     this.keyboardType,
@@ -13,7 +13,7 @@ class Custemtextformfield extends StatelessWidget {
     this.validator,
     this.controller,
   });
-  final Widget prefixIcon;
+  final Widget? prefixIcon;
   final String hintText;
   final Widget? suffixIcon;
   final TextInputType? keyboardType;
@@ -35,7 +35,7 @@ class Custemtextformfield extends StatelessWidget {
           hintStyle: textTheme.bodyMedium?.copyWith(
             color: ColorPalette.lightSecText,
           ),
-          prefixIcon: Padding(
+          prefixIcon:prefixIcon==null?null: Padding(
             padding: const EdgeInsets.all(8.0),
             child: prefixIcon,
           ),

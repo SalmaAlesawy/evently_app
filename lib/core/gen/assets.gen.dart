@@ -15,6 +15,22 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/Allicon.svg
+  SvgGenImage get allicon => const SvgGenImage('assets/icons/Allicon.svg');
+
+  /// File path: assets/icons/EN.svg
+  SvgGenImage get en => const SvgGenImage('assets/icons/EN.svg');
+
+  /// File path: assets/icons/SportIcon.svg
+  SvgGenImage get sportIcon => const SvgGenImage('assets/icons/SportIcon.svg');
+
+  /// File path: assets/icons/ToggleOff.svg
+  SvgGenImage get toggleOff => const SvgGenImage('assets/icons/ToggleOff.svg');
+
+  /// File path: assets/icons/birthday-cake.svg
+  SvgGenImage get birthdayCake =>
+      const SvgGenImage('assets/icons/birthday-cake.svg');
+
   /// File path: assets/icons/heartSelected.svg
   SvgGenImage get heartSelected =>
       const SvgGenImage('assets/icons/heartSelected.svg');
@@ -43,6 +59,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/sun.svg
   SvgGenImage get sun => const SvgGenImage('assets/icons/sun.svg');
 
+  /// File path: assets/icons/sun2.svg
+  SvgGenImage get sun2 => const SvgGenImage('assets/icons/sun2.svg');
+
   /// File path: assets/icons/userSelected.svg
   SvgGenImage get userSelected =>
       const SvgGenImage('assets/icons/userSelected.svg');
@@ -53,17 +72,23 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<SvgGenImage> get values => [
-        heartSelected,
-        heartUnselected,
-        homeSelected,
-        homeUnselected,
-        lock,
-        moon,
-        sms,
-        sun,
-        userSelected,
-        userUnselected
-      ];
+    allicon,
+    en,
+    sportIcon,
+    toggleOff,
+    birthdayCake,
+    heartSelected,
+    heartUnselected,
+    homeSelected,
+    homeUnselected,
+    lock,
+    moon,
+    sms,
+    sun,
+    sun2,
+    userSelected,
+    userUnselected,
+  ];
 }
 
 class $AssetsImagesGen {
@@ -131,6 +156,14 @@ class $AssetsImagesGen {
   AssetGenImage get darkHotTrending1 =>
       const AssetGenImage('assets/images/dark-hot-trending (1).png');
 
+  /// File path: assets/images/darkBranding.png
+  AssetGenImage get darkBranding =>
+      const AssetGenImage('assets/images/darkBranding.png');
+
+  /// File path: assets/images/darkEventlyLogo.png
+  AssetGenImage get darkEventlyLogo =>
+      const AssetGenImage('assets/images/darkEventlyLogo.png');
+
   /// File path: assets/images/dark_being-creative (3).png
   AssetGenImage get darkBeingCreative3 =>
       const AssetGenImage('assets/images/dark_being-creative (3).png');
@@ -160,30 +193,32 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        birthday,
-        bookClub,
-        connectWithFriends,
-        darkBirthday,
-        darkBookClub,
-        darkExhibition,
-        darkMeeting,
-        darkSport,
-        eventlyLogo,
-        exhibition,
-        meeting,
-        resetPassword,
-        splashbranding,
-        sport,
-        beingCreative,
-        darkHotTrending1,
-        darkBeingCreative3,
-        darkEventPlanning,
-        darkSharewithfriends,
-        eventPlanning,
-        google,
-        hotTrending,
-        routeLogo
-      ];
+    birthday,
+    bookClub,
+    connectWithFriends,
+    darkBirthday,
+    darkBookClub,
+    darkExhibition,
+    darkMeeting,
+    darkSport,
+    eventlyLogo,
+    exhibition,
+    meeting,
+    resetPassword,
+    splashbranding,
+    sport,
+    beingCreative,
+    darkHotTrending1,
+    darkBranding,
+    darkEventlyLogo,
+    darkBeingCreative3,
+    darkEventPlanning,
+    darkSharewithfriends,
+    eventPlanning,
+    google,
+    hotTrending,
+    routeLogo,
+  ];
 }
 
 class Assets {
@@ -194,11 +229,7 @@ class Assets {
 }
 
 class AssetGenImage {
-  const AssetGenImage(
-    this._assetName, {
-    this.size,
-    this.flavors = const {},
-  });
+  const AssetGenImage(this._assetName, {this.size, this.flavors = const {}});
 
   final String _assetName;
 
@@ -258,15 +289,8 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider({
-    AssetBundle? bundle,
-    String? package,
-  }) {
-    return AssetImage(
-      _assetName,
-      bundle: bundle,
-      package: package,
-    );
+  ImageProvider provider({AssetBundle? bundle, String? package}) {
+    return AssetImage(_assetName, bundle: bundle, package: package);
   }
 
   String get path => _assetName;
@@ -275,17 +299,11 @@ class AssetGenImage {
 }
 
 class SvgGenImage {
-  const SvgGenImage(
-    this._assetName, {
-    this.size,
-    this.flavors = const {},
-  }) : _isVecFormat = false;
+  const SvgGenImage(this._assetName, {this.size, this.flavors = const {}})
+    : _isVecFormat = false;
 
-  const SvgGenImage.vec(
-    this._assetName, {
-    this.size,
-    this.flavors = const {},
-  }) : _isVecFormat = true;
+  const SvgGenImage.vec(this._assetName, {this.size, this.flavors = const {}})
+    : _isVecFormat = true;
 
   final String _assetName;
   final Size? size;
@@ -339,7 +357,8 @@ class SvgGenImage {
       placeholderBuilder: placeholderBuilder,
       semanticsLabel: semanticsLabel,
       excludeFromSemantics: excludeFromSemantics,
-      colorFilter: colorFilter ??
+      colorFilter:
+          colorFilter ??
           (color == null ? null : ColorFilter.mode(color, colorBlendMode)),
       clipBehavior: clipBehavior,
       cacheColorFilter: cacheColorFilter,
