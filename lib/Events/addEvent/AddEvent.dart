@@ -1,3 +1,4 @@
+import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:eventapp/widgets/CustomAppBar.dart';
 import 'package:eventapp/widgets/CustomElevatedButton.dart';
@@ -13,6 +14,7 @@ class Addevent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppSettingProvider provider=AppSettingProvider();
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: const Customappbar(
@@ -35,7 +37,7 @@ class Addevent extends StatelessWidget {
               height: 40,
               child: ListView.separated(
                   scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => const Customelistview(),
+                  itemBuilder: (context, index) =>  Customelistview(eventCategoryData:provider.categoriesDataList[1], isSelected: true,),
                   separatorBuilder: (context, index) => const SizedBox(
                         width: 10,
                       ),

@@ -46,7 +46,7 @@ abstract class AppRouter {
         );
       case PageRouteName.homeScreen:
         return MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
+          builder: (context) =>  HomeScreen(),
           settings: settings,
         );
       case PageRouteName.layoutScreen:

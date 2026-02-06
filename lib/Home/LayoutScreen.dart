@@ -16,9 +16,9 @@ class Layoutscreen extends StatefulWidget {
 
 class _LayoutscreenState extends State<Layoutscreen> {
   List<Widget> screens = [
-    HomeScreen(),
-    Favouratescreen(),
-    Profilescreen(),
+     HomeScreen(),
+    const Favouratescreen(),
+    const Profilescreen(),
   ];
 
   int currentIndex = 0;
@@ -37,25 +37,37 @@ class _LayoutscreenState extends State<Layoutscreen> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
           child: const Icon(Icons.add),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-            onTap: (index) {
-              currentIndex = index;
-              setState(() {});
-            },
-            currentIndex: currentIndex,
-            items: [
-              BottomNavigationBarItem(
-                  icon: Assets.icons.homeUnselected.svg(),
-                  label: "Home",
-                  activeIcon: Assets.icons.homeSelected.svg()),
-              BottomNavigationBarItem(
-                  icon: Assets.icons.heartUnselected.svg(),
-                  label: "Favourite",
-                  activeIcon: Assets.icons.heartSelected.svg()),
-              BottomNavigationBarItem(
-                  icon: Assets.icons.userUnselected.svg(),
-                  label: "Profile",
-                  activeIcon: Assets.icons.userSelected.svg())
-            ]));
+        bottomNavigationBar: Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20)),
+            color: Colors.transparent
+          ),
+          child: BottomNavigationBar(
+            elevation: 0,
+            enableFeedback: false,
+            backgroundColor: Colors.transparent,
+              selectedFontSize: 12,
+              selectedItemColor: ColorPalette.lightMainColor,
+              onTap: (index) {
+                currentIndex = index;
+                setState(() {});
+              },
+              currentIndex: currentIndex,
+              items: [
+                BottomNavigationBarItem(
+                  backgroundColor: Colors.transparent,
+                    icon: Assets.icons.homeUnselected.svg(),
+                    label: "Home",
+                    activeIcon: Assets.icons.homeSelected.svg()),
+                BottomNavigationBarItem(
+                    icon: Assets.icons.heartUnselected.svg(),
+                    label: "Favourite",
+                    activeIcon: Assets.icons.heartSelected.svg()),
+                BottomNavigationBarItem(
+                    icon: Assets.icons.userUnselected.svg(),
+                    label: "Profile",
+                    activeIcon: Assets.icons.userSelected.svg())
+              ]),
+        ));
   }
 }

@@ -12,6 +12,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localization:
+    sdk: flutter
 
   cupertino_icons: ^1.0.8
   #flutter_native_splash: ^2.4.4
@@ -19,6 +21,7 @@ dependencies:
   smooth_page_indicator: ^2.0.1
 
   vector_graphics: any
+  provider: ^6.1.5+1
 dev_dependencies:
   flutter_test:
     sdk: flutter

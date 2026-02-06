@@ -1,27 +1,39 @@
+import 'package:eventapp/models/eventCategoryData.dart';
 import 'package:flutter/material.dart';
 
 import '../core/gen/assets.gen.dart';
 import '../core/theme/ColorPalette.dart';
 
 class Customelistview extends StatelessWidget {
-  const Customelistview({super.key});
+  final bool isSelected;
+  const Customelistview({
+    super.key,
+    required this.eventCategoryData,
+    required this.isSelected,
+  });
+  final EventCategoryData eventCategoryData;
 
   @override
   Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
-      width: 90,
-      height: 50,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      height: 40,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: ColorPalette.lightMainColor,
+        color: isSelected ? ColorPalette.lightMainColor : ColorPalette.white,
       ),
-      child:  Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-
         children: [
-          Assets.icons.allicon.svg(),
-          const SizedBox(width: 10,),
-          const Text("All"),
+          Icon(eventCategoryData.icn,color: isSelected?ColorPalette.white:ColorPalette.lightMainColor,),
+          Text(
+            eventCategoryData.title,
+            style: textTheme.titleMedium?.copyWith(
+                color: isSelected
+                    ? ColorPalette.white
+                    : ColorPalette.lightMainText),
+          ),
         ],
       ),
     );
