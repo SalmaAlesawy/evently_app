@@ -1,20 +1,61 @@
 import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
+import 'package:eventapp/core/utils/firestore.dart';
+import 'package:eventapp/models/event_data_model.dart';
 import 'package:eventapp/widgets/CustomAppBar.dart';
 import 'package:eventapp/widgets/CustomElevatedButton.dart';
 import 'package:eventapp/widgets/CustomListTile.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../core/gen/assets.gen.dart' show Assets;
+import '../../models/eventCategoryData.dart';
 import '../../widgets/CustemTextformField.dart';
 import '../../widgets/CustomListView.dart';
 
-class Addevent extends StatelessWidget {
-  const Addevent({super.key});
+class Addevent extends StatefulWidget {
+  Addevent({super.key});
+
+  @override
+  State<Addevent> createState() => _AddeventState();
+}
+
+class _AddeventState extends State<Addevent> {
+  final List<EventCategoryData> categoriesDataList = [
+    EventCategoryData(
+        id: "sport",
+        title: "sport",
+        image: Assets.images.sport.keyName,
+        imgDark: Assets.images.darkSport.keyName,
+        icn: Icons.sports_basketball_outlined),
+    EventCategoryData(
+        id: "birthday",
+        title: "Birthday",
+        image: Assets.images.birthday.keyName,
+        imgDark: Assets.images.darkBirthday.keyName,
+        icn: Icons.cake_outlined),
+    EventCategoryData(
+        id: "book_club",
+        title: "Book Club",
+        image: Assets.images.bookClub.keyName,
+        imgDark: Assets.images.darkBookClub.keyName,
+        icn: Icons.menu_book_outlined),
+    EventCategoryData(
+        id: "meeting",
+        title: "Meeting",
+        image: Assets.images.meeting.keyName,
+        imgDark: Assets.images.darkMeeting.keyName,
+        icn: Icons.meeting_room_outlined),
+  ];
+  int _currentIndex = 0;
+  DateTime? selectedEventDate;
 
   @override
   Widget build(BuildContext context) {
-    AppSettingProvider provider=AppSettingProvider();
+    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final TextEditingController titleController = TextEditingController();
+    final TextEditingController descriptionController = TextEditingController();
+    AppSettingProvider provider = AppSettingProvider();
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: const Customappbar(
@@ -22,71 +63,145 @@ class Addevent extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Assets.images.bookClub.image(),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: 40,
-              child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) =>  Customelistview(eventCategoryData:provider.categoriesDataList[1], isSelected: true,),
-                  separatorBuilder: (context, index) => const SizedBox(
-                        width: 10,
-                      ),
-                  itemCount: 5),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              "Title",
-              style: textTheme.titleMedium?.copyWith(
-                  color: ColorPalette.lightMainText,
-                  fontWeight: FontWeight.w500),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Custemtextformfield(
-              hintText: 'Event Title',
-              obscureText: false,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text("Description",
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Image(image: AssetImage(categoriesDataList[_currentIndex].image)),
+              const SizedBox(
+                height: 20,
+              ),
+              DefaultTabController(
+                length: categoriesDataList.length,
+                child: TabBar(
+                  tabAlignment: TabAlignment.start,
+                  labelPadding: const EdgeInsets.symmetric(horizontal: 8),
+                  padding: EdgeInsets.zero,
+                  onTap: (index) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                  isScrollable: true,
+                  indicator: const BoxDecoration(),
+                  dividerColor: Colors.transparent,
+                  //indicatorColor: Colors.transparent,
+                  tabs: categoriesDataList.map((data) {
+                    return Customelistview(
+                      eventCategoryData: data,
+                      isSelected: provider.currentCategoryIndex ==
+                          categoriesDataList.indexOf(data),
+                    );
+                  }).toList(),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                "Title",
                 style: textTheme.titleMedium?.copyWith(
                     color: ColorPalette.lightMainText,
-                    fontWeight: FontWeight.w500)),
-            Custemtextformfield(
-              hintText: 'Event Description',
-              obscureText: false,
-              maxLines: 6,
-            ),
-            const Customlisttile(
-              leading: Icon(Icons.calendar_month_outlined),
-              titleText: 'Event Date',
-              trailingText: 'Choose data',
-            ),
-            SizedBox(height: 10,),
-            const Customlisttile(
-              leading: Icon(Icons.calendar_month_outlined),
-              titleText: 'Event Time',
-              trailingText: 'Choose time',
-            ),
-            SizedBox(height: 30,),
-            const Customelevatedbutton(buttonText: "Add event")
-          ],
+                    fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Custemtextformfield(
+                controller: titleController,
+                hintText: 'Event Title',
+                obscureText: false,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Enter title";
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text("Description",
+                  style: textTheme.titleMedium?.copyWith(
+                      color: ColorPalette.lightMainText,
+                      fontWeight: FontWeight.w500)),
+              Custemtextformfield(
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Enter title";
+                  }
+                  return null;
+                },
+                controller: descriptionController,
+                hintText: 'Event Description',
+                obscureText: false,
+                maxLines: 6,
+              ),
+              Customlisttile(
+                onPressed: () {
+                  getSelectedDate();
+                },
+                leading: Icon(Icons.calendar_month_outlined),
+                titleText: 'Event Date',
+                trailingText: selectedEventDate != null
+                    ? (DateFormat("dd, MMM yyyy").format(selectedEventDate!))
+                    : 'Choose data',
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Customlisttile(
+                onPressed: () {
+                  getSelectedDate();
+                },
+                leading: const Icon(Icons.access_time_outlined),
+                titleText: 'Event Time',
+                trailingText: 'Choose time',
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Customelevatedbutton(
+                buttonText: "Add event",
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    if (selectedEventDate == null) {
+                      /// ToDo: Add toast Message
+                    }
+                    EventDataModel data = EventDataModel(
+                        eventTitle: titleController.text,
+                        eventDescription: descriptionController.text,
+                        eventDate: selectedEventDate!,
+                        eventCategoryId: categoriesDataList[_currentIndex].id,
+                        categoryImg: categoriesDataList[_currentIndex].image,
+                        categoryDarkImg:
+                            categoriesDataList[_currentIndex].imgDark);
+                    FireStoreUtils.addEvent(data);
+                  }
+                  /// ToDo: calling write on fire store
+
+
+                },
+              )
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  void getSelectedDate() async {
+    var currentDateTime = await showDatePicker(
+        context: context,
+        firstDate: DateTime.now(),
+        lastDate: DateTime.now().add(Duration(days: 265)));
+
+    setState(() {
+      selectedEventDate = currentDateTime;
+    });
   }
 }

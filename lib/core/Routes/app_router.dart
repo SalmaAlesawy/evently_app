@@ -46,16 +46,17 @@ abstract class AppRouter {
         );
       case PageRouteName.homeScreen:
         return MaterialPageRoute(
-          builder: (context) =>  HomeScreen(),
+          builder: (context) => HomeScreen(),
           settings: settings,
         );
       case PageRouteName.layoutScreen:
         return MaterialPageRoute(
-          builder: (context) =>  Layoutscreen(),
+          builder: (context) => const Layoutscreen(),
           settings: settings,
         );
       case PageRouteName.addEvent:
-        return MaterialPageRoute(builder: (context)=>Addevent(),settings: settings);
+        return MaterialPageRoute(
+            builder: (context) => Addevent(), settings: settings);
       default:
         return MaterialPageRoute(
           builder: (context) => const Splashscreen(),

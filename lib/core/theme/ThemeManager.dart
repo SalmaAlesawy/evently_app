@@ -61,6 +61,7 @@ abstract class ThemeManager{
     titleLarge:TextStyle(
     fontFamily: "Poppins",
         fontSize: 20,
+
         color: ColorPalette.lightMainText,
         fontWeight: FontWeight.w600
     ),

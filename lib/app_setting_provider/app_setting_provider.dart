@@ -1,39 +1,47 @@
 import 'package:eventapp/models/eventCategoryData.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../core/gen/assets.gen.dart';
 
 class AppSettingProvider extends ChangeNotifier {
-  static ThemeMode themeMode = ThemeMode.light;
-  bool get isDark => themeMode == ThemeMode.dark;
-  Locale _locale = const Locale("en");
-  Locale get local => _locale;
-  void toggleLanguage() {
-    _locale =
-        _locale.languageCode == 'en' ? const Locale('ar') : const Locale('en');
+  int _currentIndex=0;
+  int get currentIndex=> _currentIndex;
+  void changeCurrentIndex(int value){
+    if(_currentIndex!=value){
+      _currentIndex=value;
+      notifyListeners();
+    }
+  }
+   ThemeMode themeMode = ThemeMode.light;
+  String currentLanguage = "en";
+  void changeLanguage(String newLanguage) {
+    if(newLanguage==currentLanguage)return;
+    currentLanguage = newLanguage;
+    notifyListeners();
+  }
+  void setEnglish(){
+    currentLanguage="en";
+    notifyListeners();
+  }
+  void setArabic(){
+    currentLanguage="ar";
+    notifyListeners();
+  }
+  bool isDark()=> themeMode==ThemeMode.dark;
+  void changeTheme(newTheme) {
+    if(newTheme==themeMode) return;
+
+    themeMode=newTheme;
+
     notifyListeners();
   }
 
-  void setLocal(Locale local) {
-    _locale = local;
+  void setLight(){
+    themeMode=ThemeMode.light;
     notifyListeners();
   }
-
-  void setEnglish() => setLocal(const Locale("en"));
-  void setArabic() => setLocal(const Locale("ar"));
-  void toggleTheme() {
-    themeMode = themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-    notifyListeners();
-  }
-
-  void setLight() {
-    themeMode = ThemeMode.light;
-    notifyListeners();
-  }
-
-  void setDark() {
-    themeMode = ThemeMode.dark;
+  void setDark(){
+    themeMode=ThemeMode.dark;
     notifyListeners();
   }
 

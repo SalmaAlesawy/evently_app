@@ -12,8 +12,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localization:
+  flutter_localizations:
     sdk: flutter
+  intl: any
 
   cupertino_icons: ^1.0.8
   #flutter_native_splash: ^2.4.4
@@ -22,6 +23,8 @@ dependencies:
 
   vector_graphics: any
   provider: ^6.1.5+1
+  firebase_core: ^4.4.0
+  cloud_firestore: ^6.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -34,6 +37,8 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+  generate: true
 
   assets:
      - assets/images/

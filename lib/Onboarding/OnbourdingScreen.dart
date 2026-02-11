@@ -1,6 +1,9 @@
+import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:eventapp/core/Routes/pages_route_names.dart';
+import 'package:eventapp/core/l10n/app_localizations.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../core/gen/assets.gen.dart';
 
@@ -10,6 +13,8 @@ class Onbourdingscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
+    final appLocalization=AppLocalizations.of(context)!;
+    final provider=Provider.of<AppSettingProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -23,15 +28,14 @@ class Onbourdingscreen extends StatelessWidget {
           children: [
             Assets.images.beingCreative.image(),
             Text(
-              "Personalize Your Experience",
+              appLocalization.onboarding_title_1,
               style: textTheme.titleLarge,
             ),
             const SizedBox(
               height: 20,
             ),
             Text(
-              "Choose your preferred theme and language to get started with a comfortable,"
-              " tailored experience that suits your style.",
+              appLocalization.onboarding_description_1,
               style: textTheme.titleMedium,
             ),
             const SizedBox(
@@ -41,7 +45,7 @@ class Onbourdingscreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    "Language",
+                    appLocalization.language,
                     style: textTheme.bodyLarge,
                   ),
                 ),
@@ -53,8 +57,10 @@ class Onbourdingscreen extends StatelessWidget {
                             WidgetStatePropertyAll(ColorPalette.white),
                         shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)))),
-                    onPressed: () {},
-                    child: const Text("English")),
+                    onPressed: () {
+                      provider.setEnglish();
+                    },
+                    child:  Text(appLocalization.english)),
                 const SizedBox(
                   width: 5,
                 ),
@@ -66,8 +72,10 @@ class Onbourdingscreen extends StatelessWidget {
                             WidgetStatePropertyAll(ColorPalette.lightMainColor),
                         shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)))),
-                    onPressed: () {},
-                    child: const Text("Arabic")),
+                    onPressed: () {
+                      provider.setArabic();
+                    },
+                    child:  Text(appLocalization.arabic)),
               ],
             ),
             const SizedBox(height: 30,),
@@ -75,7 +83,7 @@ class Onbourdingscreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    "Theme",
+                    appLocalization.theme,
                     style: textTheme.bodyLarge,
                   ),
                 ),
@@ -91,7 +99,9 @@ class Onbourdingscreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      provider.setLight();
+                    },
                     child: Assets.icons.sun.svg()),
                 const SizedBox(
                   width: 5,
@@ -108,7 +118,9 @@ class Onbourdingscreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    provider.setDark();
+                  },
                   child: Assets.icons.moon.svg(),
                 )
               ],
@@ -133,7 +145,7 @@ class Onbourdingscreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushReplacementNamed(context, PageRouteName.onBoardingPages);
                     },
-                    child:  Text("Let's Start",style: textTheme.titleLarge?.copyWith(color: ColorPalette.white),)),
+                    child:  Text(appLocalization.start,style: textTheme.titleLarge?.copyWith(color: ColorPalette.white),)),
               ),
             )
           ],

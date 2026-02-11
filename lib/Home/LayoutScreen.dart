@@ -1,32 +1,34 @@
 import 'package:eventapp/Home/Favourite/FavourateScreen.dart';
 import 'package:eventapp/Home/Home_screen/Home_Screen.dart';
 import 'package:eventapp/Home/Profile/ProfileScreen.dart';
+import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:eventapp/core/Routes/pages_route_names.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../core/gen/assets.gen.dart';
 
 class Layoutscreen extends StatefulWidget {
-  Layoutscreen({super.key});
+  const Layoutscreen({super.key});
 
   @override
   State<Layoutscreen> createState() => _LayoutscreenState();
 }
 
 class _LayoutscreenState extends State<Layoutscreen> {
-  List<Widget> screens = [
+  List<Widget>screens=[
      HomeScreen(),
     const Favouratescreen(),
     const Profilescreen(),
   ];
 
-  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    final provider=Provider.of<AppSettingProvider>(context);
     return Scaffold(
-        body: screens[currentIndex],
+        body: screens[provider.currentIndex],
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.pushNamed(context, PageRouteName.addEvent);
@@ -48,11 +50,8 @@ class _LayoutscreenState extends State<Layoutscreen> {
             backgroundColor: Colors.transparent,
               selectedFontSize: 12,
               selectedItemColor: ColorPalette.lightMainColor,
-              onTap: (index) {
-                currentIndex = index;
-                setState(() {});
-              },
-              currentIndex: currentIndex,
+              onTap: provider.changeCurrentIndex,
+              currentIndex:provider.currentIndex ,
               items: [
                 BottomNavigationBarItem(
                   backgroundColor: Colors.transparent,

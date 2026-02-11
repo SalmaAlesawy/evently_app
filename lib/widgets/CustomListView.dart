@@ -1,7 +1,6 @@
 import 'package:eventapp/models/eventCategoryData.dart';
 import 'package:flutter/material.dart';
 
-import '../core/gen/assets.gen.dart';
 import '../core/theme/ColorPalette.dart';
 
 class Customelistview extends StatelessWidget {
@@ -25,8 +24,13 @@ class Customelistview extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
+        spacing: 5,
         children: [
-          Icon(eventCategoryData.icn,color: isSelected?ColorPalette.white:ColorPalette.lightMainColor,),
+          Icon(
+            eventCategoryData.icn,
+            color:
+                isSelected ? ColorPalette.white : ColorPalette.lightMainColor,
+          ),
           Text(
             eventCategoryData.title,
             style: textTheme.titleMedium?.copyWith(

@@ -1,11 +1,14 @@
+import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:eventapp/core/Routes/pages_route_names.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:eventapp/widgets/CustemTextformField.dart';
 import 'package:eventapp/widgets/CustomElevatedButton.dart';
 import 'package:eventapp/widgets/CustomeTextButton.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/gen/assets.gen.dart';
+import '../../core/l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,6 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool obscureText = false;
   @override
   Widget build(BuildContext context) {
+    final provider=Provider.of<AppSettingProvider>(context);
+    final appLocalization=AppLocalizations.of(context)!;
     TextTheme textTheme = Theme.of(context).textTheme;
     return SafeArea(
       child: Scaffold(
@@ -54,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   keyboardType: TextInputType.text,
                   obscureText: obscureText,
                   prefixIcon: Assets.icons.sms.svg(width: 24, height: 24),
-                  hintText: "Enter your email ",
+                  hintText: appLocalization.email,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
@@ -71,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: _passwordController,
                   obscureText: obscureText,
                   prefixIcon: Assets.icons.lock.svg(width: 24, height: 24),
-                  hintText: "Enter your password",
+                  hintText: appLocalization.password,
                   suffixIcon: IconButton(
                       onPressed: () {
                         obscureText = !obscureText;
@@ -109,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
                 Custometextbutton(
-                    textButton: "Forger password?",
+                    textButton: appLocalization.forgetPassword,
                     onpressed: () {
                       Navigator.pushNamed(
                           context, PageRouteName.forgerPasswordScreen);

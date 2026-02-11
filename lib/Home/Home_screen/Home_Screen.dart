@@ -11,36 +11,38 @@ import 'package:provider/provider.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final List<EventCategoryData> categoriesDataList = [
+
     EventCategoryData(
         id: "sport",
         title: "sport",
-        image: "",
-        imgDark: '',
+        image: Assets.images.sport.keyName,
+        imgDark: Assets.images.darkSport.keyName,
         icn: Icons.sports_basketball_outlined),
     EventCategoryData(
         id: "birthday",
         title: "Birthday",
-        image: "",
-        imgDark: '',
+        image: Assets.images.birthday.keyName,
+        imgDark: Assets.images.darkBirthday.keyName,
         icn: Icons.cake_outlined),
     EventCategoryData(
         id: "book_club",
         title: "Book Club",
-        image: Assets.icons.sportIcon.keyName,
-        imgDark: '',
+        image: Assets.images.bookClub.keyName,
+        imgDark: Assets.images.darkBookClub.keyName,
         icn: Icons.menu_book_outlined),
     EventCategoryData(
         id: "meeting",
         title: "Meeting",
-        image: Assets.icons.sportIcon.keyName,
-        imgDark: '',
+        image: Assets.images.meeting.keyName,
+        imgDark: Assets.images.darkMeeting.keyName,
         icn: Icons.meeting_room_outlined),
   ];
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<AppSettingProvider>();
+    final provider = Provider.of<AppSettingProvider>(context);
     TextTheme textTheme = Theme.of(context).textTheme;
+    ThemeData theme=Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -52,35 +54,39 @@ class HomeScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-              onPressed: () {
-                context.read<AppSettingProvider>().toggleTheme();
-              },
-              icon: context.watch<AppSettingProvider>().isDark
-                  ? Assets.icons.moon.svg()
-                  : Assets.icons.sun2.svg()),
+            onPressed: () {
+
+              provider.themeMode == ThemeMode.light
+                  ? provider.changeTheme(ThemeMode.dark)
+                  : provider.changeTheme(ThemeMode.light);
+            },
+            icon: provider.themeMode == ThemeMode.light
+                ? Assets.icons.sun2.svg()
+                : Assets.icons.moon.svg(),
+            color: theme.primaryColor,
+          ),
           InkWell(
             onTap: () {
-              context.read<AppSettingProvider>().toggleLanguage();
+              provider.changeLanguage(
+                  provider.currentLanguage == "ar" ? "en" : "ar");
             },
             child: Container(
               width: 34,
               height: 32,
-              margin: EdgeInsets.all(8),
+              margin: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                   color: ColorPalette.lightMainColor,
                   borderRadius: BorderRadius.circular(8)),
               child: Center(
-                  child:
-                      context.watch<AppSettingProvider>().local.languageCode ==
-                              'ar'
-                          ? Text(
-                              "AR",
-                              style: textTheme.bodyMedium,
-                            )
-                          : Text(
-                              "EN",
-                              style: textTheme.bodyMedium,
-                            )),
+                  child: provider.currentLanguage == 'ar'
+                      ? Text(
+                          "AR",
+                          style: textTheme.bodyMedium,
+                        )
+                      : Text(
+                          "EN",
+                          style: textTheme.bodyMedium,
+                        )),
             ),
           )
         ],
@@ -102,20 +108,19 @@ class HomeScreen extends StatelessWidget {
             DefaultTabController(
               length: categoriesDataList.length,
               child: TabBar(
+                tabAlignment: TabAlignment.start,
+                labelPadding: const EdgeInsets.symmetric(horizontal: 8),
                 padding: EdgeInsets.zero,
                 onTap: provider.changeCurrentCategoryIndex,
-
-                physics: const ClampingScrollPhysics(),
                 isScrollable: true,
                 indicator: const BoxDecoration(),
                 dividerColor: Colors.transparent,
                 //indicatorColor: Colors.transparent,
-                tabs: categoriesDataList.asMap().entries.map((entry) {
-                  final index = entry.key;
-                  final data = entry.value;
+                tabs: categoriesDataList.map((data) {
+
                   return Customelistview(
                     eventCategoryData: data,
-                    isSelected: provider.currentCategoryIndex == index,
+                    isSelected: provider.currentCategoryIndex == categoriesDataList.indexOf(data),
                   );
                 }).toList(),
               ),

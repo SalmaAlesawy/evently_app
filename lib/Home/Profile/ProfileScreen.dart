@@ -53,13 +53,13 @@ class Profilescreen extends StatelessWidget {
                 icon: Assets.icons.toggleOff.svg(),
                 onPressed: () {},
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               Customcontainer(
                 text: "Language",
                 icon: Icon(Icons.arrow_forward_ios_sharp,color: ColorPalette.lightMainColor,),
                 onPressed: () {},
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               Customcontainer(
                 text: "Logout",
                 icon: Icon(Icons.logout,color: ColorPalette.red,),
