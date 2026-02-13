@@ -1,8 +1,11 @@
 import 'package:eventapp/core/Routes/pages_route_names.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
+import 'package:eventapp/core/utils/Firebase_auth_utils.dart';
 import 'package:eventapp/widgets/CustomElevatedButton.dart';
 import 'package:eventapp/widgets/CustomeTextButton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../core/gen/assets.gen.dart' show Assets;
 import '../../widgets/CustemTextformField.dart' show Custemtextformfield;
@@ -193,13 +196,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       buttonText: "Sign up",
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("All fields are valid"),
+                          EasyLoading.show();
+                          FireBaseAuthUtils.signUp(_emailController.text,
+                                  _passwordController.text)
+                              .then((value) {
+                            EasyLoading.dismiss();
+                            if(value){
+                              toastification.show(
+                                  title: const Text(
+                                      "User created account successfullty"),
+                                  type: ToastificationType.success,
+                                  alignment: Alignment.center);
+                              Navigator.pushReplacementNamed(
+                                  context, PageRouteName.loginScreen);
+                            }
 
-                            ),
-                          );
-                          Navigator.pushReplacementNamed(context, PageRouteName.loginScreen);
+
+
+                          });
+
+
+
                         }
                       },
                     ),
@@ -223,7 +240,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     })
               ],
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             Text(
               "Or",
               style: textTheme.titleMedium?.copyWith(
@@ -231,16 +250,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   fontWeight: FontWeight.w500),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             Customelevatedbutton(
               image: Assets.images.google.keyName,
               onPressed: () {},
               buttonText: "Sign up With Google",
               backGroundColor: WidgetStatePropertyAll(ColorPalette.white),
               forGroundColor:
-              WidgetStatePropertyAll(ColorPalette.lightMainColor),
+                  WidgetStatePropertyAll(ColorPalette.lightMainColor),
             )
-
           ],
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class EventCategoryData {
+
   final String id;
   final String title;
   final String image;

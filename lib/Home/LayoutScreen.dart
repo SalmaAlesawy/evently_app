@@ -19,7 +19,7 @@ class Layoutscreen extends StatefulWidget {
 class _LayoutscreenState extends State<Layoutscreen> {
   List<Widget>screens=[
      HomeScreen(),
-    const Favouratescreen(),
+     Favouratescreen(),
     const Profilescreen(),
   ];
 

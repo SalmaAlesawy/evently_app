@@ -1,11 +1,14 @@
 import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:eventapp/core/Routes/pages_route_names.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
+import 'package:eventapp/core/utils/Firebase_auth_utils.dart';
 import 'package:eventapp/widgets/CustemTextformField.dart';
 import 'package:eventapp/widgets/CustomElevatedButton.dart';
 import 'package:eventapp/widgets/CustomeTextButton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../core/gen/assets.gen.dart';
 import '../../core/l10n/app_localizations.dart';
@@ -29,7 +32,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool obscureText = false;
   @override
   Widget build(BuildContext context) {
-    final provider=Provider.of<AppSettingProvider>(context);
     final appLocalization=AppLocalizations.of(context)!;
     TextTheme textTheme = Theme.of(context).textTheme;
     return SafeArea(
@@ -126,12 +128,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   buttonText: "Login",
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("All fields are valid"),
-                        ),
-                      );
-                      Navigator.pushReplacementNamed(context, PageRouteName.layoutScreen);
+                      EasyLoading.show();
+                      FireBaseAuthUtils.signInWithEmailAndPassword(_emailController.text, _passwordController.text).then((value){
+                        EasyLoading.dismiss();
+                        if(value){
+                          toastification.show(title: const Text("Login Successfly"),type: ToastificationType.success,alignment: Alignment.center);
+                          Navigator.pushReplacementNamed(context, PageRouteName.layoutScreen);
+                        }
+                      });
+
+
                     }
                   },
                 ),

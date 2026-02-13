@@ -1,23 +1,28 @@
+import 'package:flutter/material.dart';
+
 class EventDataModel {
   static const String collectionName = "EventCollection";
-   String? eventId;
+  String? eventId;
   final String eventTitle;
   final String eventDescription;
   final DateTime eventDate;
+  final TimeOfDay? eventTime;
   final String eventCategoryId;
   final String categoryImg;
   final String categoryDarkImg;
-  final bool? isFavorite;
+  bool isFavorite = false;
 
-  EventDataModel(
-      {this.eventId,
-      required this.eventTitle,
-      required this.eventDescription,
-      required this.eventDate,
-      required this.eventCategoryId,
-      required this.categoryImg,
-      required this.categoryDarkImg,
-      this.isFavorite = false});
+  EventDataModel({
+    this.eventId,
+    required this.eventTitle,
+    required this.eventDescription,
+    required this.eventDate,
+    required this.eventCategoryId,
+    required this.categoryImg,
+    required this.categoryDarkImg,
+    required this.isFavorite,
+    required this.eventTime,
+  });
 
   factory EventDataModel.fromFireStore(
     Map<String, dynamic> json,
@@ -30,7 +35,8 @@ class EventDataModel {
         eventCategoryId: json["eventCategoryId"],
         categoryImg: json["categoryImg"],
         categoryDarkImg: json["categoryDarkImg"],
-        isFavorite: json["isFavorite"]);
+        isFavorite: json["isFavorite"],
+        eventTime:json["eventTime"]!=null? TimeOfDay(hour: json["eventTime"]["hour"], minute: json["eventTime"]["minute"]):null);
   }
 
   Map<String, dynamic> toFireStore() {
@@ -42,7 +48,11 @@ class EventDataModel {
       "eventCategoryId": eventCategoryId,
       "categoryImg": categoryImg,
       "categoryDarkImg": categoryDarkImg,
-      "isFavorite": isFavorite
+      "isFavorite": isFavorite,
+      "eventTime": {
+        "hour": eventTime!.hour,
+        "minute":eventTime!.minute
+      }
     };
   }
 }

@@ -1,5 +1,7 @@
 import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
+import 'package:eventapp/core/utils/firestore.dart';
+import 'package:eventapp/models/event_data_model.dart';
 import 'package:eventapp/widgets/CustomListView.dart';
 import 'package:eventapp/widgets/CustomStack.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +10,15 @@ import '../../core/gen/assets.gen.dart';
 import '../../models/eventCategoryData.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
-  final List<EventCategoryData> categoriesDataList = [
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final List<EventCategoryData> categoriesDataList = [
     EventCategoryData(
         id: "sport",
         title: "sport",
@@ -38,11 +45,13 @@ class HomeScreen extends StatelessWidget {
         icn: Icons.meeting_room_outlined),
   ];
 
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<AppSettingProvider>(context);
     TextTheme textTheme = Theme.of(context).textTheme;
-    ThemeData theme=Theme.of(context);
+    ThemeData theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -55,7 +64,6 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-
               provider.themeMode == ThemeMode.light
                   ? provider.changeTheme(ThemeMode.dark)
                   : provider.changeTheme(ThemeMode.light);
@@ -111,35 +119,68 @@ class HomeScreen extends StatelessWidget {
                 tabAlignment: TabAlignment.start,
                 labelPadding: const EdgeInsets.symmetric(horizontal: 8),
                 padding: EdgeInsets.zero,
-                onTap: provider.changeCurrentCategoryIndex,
+                onTap: (index) {
+                  setState(() {
+                    if (_currentIndex != index) {
+                      _currentIndex = index;
+                    }
+                  });
+                },
                 isScrollable: true,
                 indicator: const BoxDecoration(),
                 dividerColor: Colors.transparent,
                 //indicatorColor: Colors.transparent,
                 tabs: categoriesDataList.map((data) {
-
                   return Customelistview(
                     eventCategoryData: data,
-                    isSelected: provider.currentCategoryIndex == categoriesDataList.indexOf(data),
+                    isSelected:
+                        _currentIndex == categoriesDataList.indexOf(data),
                   );
                 }).toList(),
               ),
             ),
             const SizedBox(
-              height: 10,
+              height: 30,
             ),
-            Expanded(
-              child: ListView.separated(
-                  itemBuilder: (context, index) {
-                    return const Customstack();
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(
-                      height: 10,
+            StreamBuilder(
+                stream: FireStoreUtils.getStreamDataFromFireStore(
+                    categoriesDataList[_currentIndex].id),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text(
+                      snapshot.error.toString(),
                     );
-                  },
-                  itemCount: 5),
-            )
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+                  snapshot.data!.docs.map((e) {
+                    return e.data();
+                  }).toList();
+                  List<EventDataModel> dataList = snapshot.data!.docs.map((e) {
+                    return e.data();
+                  }).toList();
+                  return dataList.isEmpty
+                      ? Center(
+                          child: Text(
+                          "No Data Found",
+                          style: textTheme.titleMedium,
+                        ))
+                      : Expanded(
+                          child: ListView.separated(
+                              itemBuilder: (context, index) {
+                                return Customstack(
+                                  dataModel: dataList[index],
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(
+                                  height: 10,
+                                );
+                              },
+                              itemCount: dataList.length),
+                        );
+                })
           ],
         ),
       ),

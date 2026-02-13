@@ -6,7 +6,9 @@ import 'package:eventapp/widgets/CustomAppBar.dart';
 import 'package:eventapp/widgets/CustomElevatedButton.dart';
 import 'package:eventapp/widgets/CustomListTile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
+import 'package:toastification/toastification.dart';
 
 import '../../core/gen/assets.gen.dart' show Assets;
 import '../../models/eventCategoryData.dart';
@@ -49,13 +51,12 @@ class _AddeventState extends State<Addevent> {
   ];
   int _currentIndex = 0;
   DateTime? selectedEventDate;
-
+  TimeOfDay? selectedEventTime;
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    final TextEditingController titleController = TextEditingController();
-    final TextEditingController descriptionController = TextEditingController();
-    AppSettingProvider provider = AppSettingProvider();
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: const Customappbar(
@@ -93,8 +94,8 @@ class _AddeventState extends State<Addevent> {
                   tabs: categoriesDataList.map((data) {
                     return Customelistview(
                       eventCategoryData: data,
-                      isSelected: provider.currentCategoryIndex ==
-                          categoriesDataList.indexOf(data),
+                      isSelected:
+                          _currentIndex == categoriesDataList.indexOf(data),
                     );
                   }).toList(),
                 ),
@@ -132,7 +133,7 @@ class _AddeventState extends State<Addevent> {
               Custemtextformfield(
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return "Enter title";
+                    return "Enter description";
                   }
                   return null;
                 },
@@ -145,46 +146,63 @@ class _AddeventState extends State<Addevent> {
                 onPressed: () {
                   getSelectedDate();
                 },
-                leading: Icon(Icons.calendar_month_outlined),
+                leading: const Icon(Icons.calendar_month_outlined),
                 titleText: 'Event Date',
                 trailingText: selectedEventDate != null
                     ? (DateFormat("dd, MMM yyyy").format(selectedEventDate!))
-                    : 'Choose data',
+                    : 'Choose date',
               ),
               const SizedBox(
                 height: 10,
               ),
               Customlisttile(
                 onPressed: () {
-                  getSelectedDate();
+                  getSelectedTime();
                 },
                 leading: const Icon(Icons.access_time_outlined),
                 titleText: 'Event Time',
-                trailingText: 'Choose time',
+                trailingText: selectedEventTime != null
+                    ? selectedEventTime!.format(context)
+                    : 'Choose time',
               ),
               const SizedBox(
-                height: 30,
+                height: 10,
               ),
               Customelevatedbutton(
                 buttonText: "Add event",
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    if (selectedEventDate == null) {
-                      /// ToDo: Add toast Message
-                    }
+                    EasyLoading.show();
                     EventDataModel data = EventDataModel(
+                        eventTime: selectedEventTime!,
+                        isFavorite: false,
                         eventTitle: titleController.text,
                         eventDescription: descriptionController.text,
                         eventDate: selectedEventDate!,
                         eventCategoryId: categoriesDataList[_currentIndex].id,
                         categoryImg: categoriesDataList[_currentIndex].image,
                         categoryDarkImg:
-                            categoriesDataList[_currentIndex].imgDark);
-                    FireStoreUtils.addEvent(data);
+                        categoriesDataList[_currentIndex].imgDark);
+
+
+                    bool value= await FireStoreUtils.addEvent(data);
+                    EasyLoading.dismiss();
+                    if (value) {
+                      toastification.show(
+                          title: const Text("Event added succssfuly"),
+                          autoCloseDuration: const Duration(seconds: 2),
+                          type: ToastificationType.success,
+                          alignment: Alignment.center);
+                      Navigator.pop(context);
+                    } else {
+                      toastification.show(
+                          title:
+                          const Text("Event have not added successfully"),
+                          autoCloseDuration: const Duration(seconds: 2),
+                          type: ToastificationType.error,
+                          alignment: Alignment.center);
+                    }
                   }
-                  /// ToDo: calling write on fire store
-
-
                 },
               )
             ],
@@ -198,10 +216,20 @@ class _AddeventState extends State<Addevent> {
     var currentDateTime = await showDatePicker(
         context: context,
         firstDate: DateTime.now(),
-        lastDate: DateTime.now().add(Duration(days: 265)));
+        lastDate: DateTime.now().add(const Duration(days: 265)));
 
     setState(() {
       selectedEventDate = currentDateTime;
     });
+  }
+
+  void getSelectedTime() async {
+    final TimeOfDay? timeOfDay =
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
+    if (timeOfDay != null) {
+      setState(() {
+        selectedEventTime = timeOfDay;
+      });
+    }
   }
 }
