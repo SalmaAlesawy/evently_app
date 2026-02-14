@@ -1,3 +1,4 @@
+import 'package:eventapp/Events/EventDetails/EventDetails.dart';
 import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:eventapp/core/utils/firestore.dart';
@@ -154,9 +155,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator();
                   }
-                  snapshot.data!.docs.map((e) {
-                    return e.data();
-                  }).toList();
                   List<EventDataModel> dataList = snapshot.data!.docs.map((e) {
                     return e.data();
                   }).toList();
@@ -167,10 +165,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: textTheme.titleMedium,
                         ))
                       : Expanded(
-                          child: ListView.separated(
+                        child: ListView.separated(
                               itemBuilder: (context, index) {
-                                return Customstack(
-                                  dataModel: dataList[index],
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Eventdetails(event: dataList[index])));
+                                  },
+                                  child: Customstack(
+                                    dataModel: dataList[index],
+                                  ),
                                 );
                               },
                               separatorBuilder: (context, index) {
@@ -179,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               },
                               itemCount: dataList.length),
-                        );
+                      );
                 })
           ],
         ),

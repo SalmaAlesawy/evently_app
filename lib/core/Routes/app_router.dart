@@ -1,7 +1,6 @@
 import 'package:eventapp/Authentication/forget_password/Forget_Password_Screen.dart';
 import 'package:eventapp/Authentication/login/Login_Screen.dart';
 import 'package:eventapp/Authentication/register/Register_Screen.dart';
-import 'package:eventapp/Events/EventDetails/EventDetails.dart';
 import 'package:eventapp/Home/Home_screen/Home_Screen.dart';
 import 'package:eventapp/Onboarding/OnbourdingScreen.dart';
 import 'package:eventapp/SplashView/SplashScreen.dart';
@@ -60,11 +59,7 @@ abstract class AppRouter {
           builder: (context) => Addevent(),
           settings: settings,
         );
-      case PageRouteName.eventDetails:
-        return MaterialPageRoute(
-          builder: (context) => const Eventdetails(),
-          settings: settings,
-        );
+
       default:
         return MaterialPageRoute(
           builder: (context) => const Splashscreen(),

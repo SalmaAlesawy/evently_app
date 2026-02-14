@@ -16,13 +16,21 @@ import '../../widgets/CustemTextformField.dart';
 import '../../widgets/CustomListView.dart';
 
 class Addevent extends StatefulWidget {
-  Addevent({super.key});
-
+  Addevent({super.key,  this.event,  this.isUpdate=false});
+final EventDataModel? event;
+final bool isUpdate;
   @override
   State<Addevent> createState() => _AddeventState();
 }
 
 class _AddeventState extends State<Addevent> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    titleController.text=widget.event!.eventTitle;
+    descriptionController.text=widget.event!.eventDescription;
+  }
   final List<EventCategoryData> categoriesDataList = [
     EventCategoryData(
         id: "sport",
@@ -50,9 +58,9 @@ class _AddeventState extends State<Addevent> {
         icn: Icons.meeting_room_outlined),
   ];
   int _currentIndex = 0;
-  DateTime? selectedEventDate;
-  TimeOfDay? selectedEventTime;
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late DateTime? selectedEventDate=widget.event!.eventDate;
+  late TimeOfDay? selectedEventTime=widget.event!.eventTime;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   @override
@@ -150,24 +158,26 @@ class _AddeventState extends State<Addevent> {
                 titleText: 'Event Date',
                 trailingText: selectedEventDate != null
                     ? (DateFormat("dd, MMM yyyy").format(selectedEventDate!))
-                    : 'Choose date',
+                    : widget.event?.eventDate!=null? (DateFormat("dd, MMM yyyy").format(widget.event!.eventDate)):
+                    "Choose data"
               ),
               const SizedBox(
                 height: 10,
               ),
               Customlisttile(
-                onPressed: () {
+                onPressed: (){
                   getSelectedTime();
                 },
                 leading: const Icon(Icons.access_time_outlined),
                 titleText: 'Event Time',
                 trailingText: selectedEventTime != null
                     ? selectedEventTime!.format(context)
-                    : 'Choose time',
+                    : widget.event?.eventTime!=null? widget.event?.eventTime!.format(context)??"" :"Choose time"
               ),
               const SizedBox(
                 height: 10,
               ),
+              widget.isUpdate==false?
               Customelevatedbutton(
                 buttonText: "Add event",
                 onPressed: () async {
@@ -181,15 +191,14 @@ class _AddeventState extends State<Addevent> {
                         eventDate: selectedEventDate!,
                         eventCategoryId: categoriesDataList[_currentIndex].id,
                         categoryImg: categoriesDataList[_currentIndex].image,
-                        categoryDarkImg:
-                        categoriesDataList[_currentIndex].imgDark);
+                        categoryDarkImg: categoriesDataList[_currentIndex].imgDark);
 
 
                     bool value= await FireStoreUtils.addEvent(data);
                     EasyLoading.dismiss();
                     if (value) {
                       toastification.show(
-                          title: const Text("Event added succssfuly"),
+                          title: const Text("Event added successfully"),
                           autoCloseDuration: const Duration(seconds: 2),
                           type: ToastificationType.success,
                           alignment: Alignment.center);
@@ -198,6 +207,44 @@ class _AddeventState extends State<Addevent> {
                       toastification.show(
                           title:
                           const Text("Event have not added successfully"),
+                          autoCloseDuration: const Duration(seconds: 2),
+                          type: ToastificationType.error,
+                          alignment: Alignment.center);
+                    }
+                  }
+                },
+              ):
+              Customelevatedbutton(
+                buttonText: "Update Event",
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    EasyLoading.show() ;
+                    EventDataModel data = EventDataModel(
+                      eventId: widget.event?.eventId,
+                        eventTime: selectedEventTime,
+                        isFavorite: false,
+                        eventTitle: titleController.text,
+                        eventDescription: descriptionController.text,
+                        eventDate: selectedEventDate!,
+                        eventCategoryId: categoriesDataList[_currentIndex].id,
+                        categoryImg: categoriesDataList[_currentIndex].image,
+                        categoryDarkImg:
+                        categoriesDataList[_currentIndex].imgDark);
+
+
+                    bool value= await FireStoreUtils.updateEvent(data);
+                    EasyLoading.dismiss();
+                    if (value) {
+                      toastification.show(
+                          title: const Text("Event updated successfully"),
+                          autoCloseDuration: const Duration(seconds: 2),
+                          type: ToastificationType.success,
+                          alignment: Alignment.center);
+                      Navigator.pop(context);
+                    } else {
+                      toastification.show(
+                          title:
+                          const Text("Event have not updated successfully"),
                           autoCloseDuration: const Duration(seconds: 2),
                           type: ToastificationType.error,
                           alignment: Alignment.center);

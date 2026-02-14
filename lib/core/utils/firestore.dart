@@ -51,18 +51,30 @@ abstract class FireStoreUtils {
     return collectionRef.snapshots();
   }
 
+  static Stream<DocumentSnapshot<EventDataModel>> getSingleEventStream(String eventId){
+    return getCollectionRef().doc(eventId).snapshots();
+  }
+
   static Stream<QuerySnapshot<EventDataModel>> getStreamFavouriteData() {
     var collectionRef = getCollectionRef().where("isFavorite", isEqualTo: true);
     return collectionRef.snapshots();
   }
 
-  static Future<void> updateEvent(EventDataModel data) async {
+  static Future<bool> updateEvent(EventDataModel event) async {
+    try{
+      print("Event Id ${event.eventId}");
     CollectionReference collectionReference = getCollectionRef();
-    var docRef = collectionReference.doc(data.eventId);
-    docRef.update(data.toFireStore());
+    var docRef = collectionReference.doc(event.eventId);
+   await docRef.update(event.toFireStore());
+    return true;
+  }
+  catch(error){
+      return false;
+  }
   }
 
   static Future<void> deleteEvent(EventDataModel data) async {
+
     CollectionReference collectionReference = getCollectionRef();
     var docRef = collectionReference.doc(data.eventId);
     docRef.delete();

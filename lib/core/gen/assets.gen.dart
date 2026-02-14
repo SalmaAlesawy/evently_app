@@ -31,6 +31,9 @@ class $AssetsIconsGen {
   SvgGenImage get birthdayCake =>
       const SvgGenImage('assets/icons/birthday-cake.svg');
 
+  /// File path: assets/icons/edit-2.svg
+  SvgGenImage get edit2 => const SvgGenImage('assets/icons/edit-2.svg');
+
   /// File path: assets/icons/heartSelected.svg
   SvgGenImage get heartSelected =>
       const SvgGenImage('assets/icons/heartSelected.svg');
@@ -62,6 +65,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/sun2.svg
   SvgGenImage get sun2 => const SvgGenImage('assets/icons/sun2.svg');
 
+  /// File path: assets/icons/trash.svg
+  SvgGenImage get trash => const SvgGenImage('assets/icons/trash.svg');
+
   /// File path: assets/icons/userSelected.svg
   SvgGenImage get userSelected =>
       const SvgGenImage('assets/icons/userSelected.svg');
@@ -77,6 +83,7 @@ class $AssetsIconsGen {
     sportIcon,
     toggleOff,
     birthdayCake,
+    edit2,
     heartSelected,
     heartUnselected,
     homeSelected,
@@ -86,6 +93,7 @@ class $AssetsIconsGen {
     sms,
     sun,
     sun2,
+    trash,
     userSelected,
     userUnselected,
   ];
