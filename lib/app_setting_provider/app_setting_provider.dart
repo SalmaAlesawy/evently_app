@@ -27,7 +27,7 @@ class AppSettingProvider extends ChangeNotifier {
     currentLanguage="ar";
     notifyListeners();
   }
-  bool isDark()=> themeMode==ThemeMode.dark;
+
   void changeTheme(newTheme) {
     if(newTheme==themeMode) return;
 

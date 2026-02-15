@@ -5,36 +5,36 @@ abstract class ThemeManager{
   static ThemeData getLightTheme(){
     return ThemeData(
       useMaterial3: true,
-      scaffoldBackgroundColor: ColorPalette.lightBackGround,
-      primaryColor: ColorPalette.lightMainColor,
+      scaffoldBackgroundColor: LightColorPalette.lightBackGround,
+      primaryColor: LightColorPalette.lightMainColor,
       textTheme: TextTheme(
           titleLarge:TextStyle(
             fontFamily: "Poppins",
             fontSize: 20,
-            color: ColorPalette.lightMainText,
+            color: LightColorPalette.lightMainText,
             fontWeight: FontWeight.w600
           ),
           titleMedium:TextStyle(
               fontFamily: "Poppins",
             fontWeight:FontWeight.w400,
             fontSize: 16,
-            color: ColorPalette.lightSecText
+            color: LightColorPalette.lightSecText
           ),
           bodyLarge: TextStyle(
               fontFamily: "Poppins",
-        color: ColorPalette.lightMainColor,
+        color: LightColorPalette.lightMainColor,
         fontSize: 18,
         fontWeight: FontWeight.w500
       ),
           bodyMedium:TextStyle(
               fontFamily: "Poppins",
-            color: ColorPalette.white,
+            color: LightColorPalette.white,
             fontSize: 14,
             fontWeight: FontWeight.w600
           ),
           headlineSmall:TextStyle(
             fontFamily: "Poppins",
-            color: ColorPalette.lightMainColor,
+            color: LightColorPalette.lightMainColor,
             fontSize: 24,
             fontWeight: FontWeight.w600
           ),
@@ -42,50 +42,44 @@ abstract class ThemeManager{
             fontFamily: "Poppins",
             fontWeight: FontWeight.w400,
             fontSize: 12,
-            color: ColorPalette.lightDarkDisable
+            color: LightColorPalette.lightDarkDisable
           )
-
-
-
       )
-
     );
-
   }
   static ThemeData getDarkTheme(){
     return ThemeData(
       useMaterial3: true,
-      scaffoldBackgroundColor: ColorPalette.darkBackGround,
-      primaryColor: ColorPalette.darkMainColor,
+      scaffoldBackgroundColor: DarkColorPalette.darkBackGround,
+      primaryColor: DarkColorPalette.darkMainColor,
         textTheme: TextTheme(
     titleLarge:TextStyle(
     fontFamily: "Poppins",
         fontSize: 20,
-
-        color: ColorPalette.lightMainText,
+        color: DarkColorPalette.white,
         fontWeight: FontWeight.w600
     ),
     titleMedium:TextStyle(
     fontFamily: "Poppins",
     fontWeight:FontWeight.w400,
     fontSize: 16,
-    color: ColorPalette.lightSecText
+    color: DarkColorPalette.darkSecText
     ),
     bodyLarge: TextStyle(
     fontFamily: "Poppins",
-    color: ColorPalette.lightMainColor,
+    color: DarkColorPalette.darkMainColor,
     fontSize: 18,
     fontWeight: FontWeight.w500
     ),
     bodyMedium:TextStyle(
     fontFamily: "Poppins",
-    color: ColorPalette.white,
+    color: DarkColorPalette.white,
     fontSize: 14,
     fontWeight: FontWeight.w600
     ),
     headlineSmall:TextStyle(
     fontFamily: "Poppins",
-    color: ColorPalette.lightMainColor,
+    color: DarkColorPalette.darkMainColor,
     fontSize: 24,
     fontWeight: FontWeight.w600
     ),
@@ -93,7 +87,7 @@ abstract class ThemeManager{
     fontFamily: "Poppins",
     fontWeight: FontWeight.w400,
     fontSize: 12,
-    color: ColorPalette.lightDarkDisable
+    color: DarkColorPalette.lightDarkDisable
     )
 
 

@@ -1,4 +1,6 @@
+import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../core/theme/ColorPalette.dart';
 
@@ -14,13 +16,17 @@ class Customcontainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<AppSettingProvider>(context);
     TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
       height: 48,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       margin: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(16)),
+          color: provider.themeMode == ThemeMode.light
+              ? LightColorPalette.white
+              : DarkColorPalette.darkInputs,
+          borderRadius: BorderRadius.circular(16)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -28,7 +34,10 @@ class Customcontainer extends StatelessWidget {
           Text(
             text,
             style: textTheme.titleMedium?.copyWith(
-                color: ColorPalette.lightMainText, fontWeight: FontWeight.w500),
+                color: provider.themeMode == ThemeMode.light
+                    ? LightColorPalette.lightMainText
+                    : DarkColorPalette.darkMainColor,
+                fontWeight: FontWeight.bold),
           ),
           IconButton(
             onPressed: onPressed,

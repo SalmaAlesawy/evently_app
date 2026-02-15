@@ -3,6 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:toastification/toastification.dart';
 
 class FireBaseAuthUtils {
+
+  Future<void> SignOut()async{
+    await FirebaseAuth.instance.signOut();
+  }
   static Future<bool> signUp(String emailAddress, String password) async {
     try {
       var fireBaseAuth = FirebaseAuth.instance;

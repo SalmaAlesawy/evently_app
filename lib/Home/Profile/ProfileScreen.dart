@@ -1,6 +1,8 @@
+import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:eventapp/widgets/CustomContainer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/gen/assets.gen.dart';
 
@@ -10,6 +12,7 @@ class Profilescreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
+    final provider = Provider.of<AppSettingProvider>(context);
     return SafeArea(
       child: Scaffold(
         body: Center(
@@ -42,7 +45,9 @@ class Profilescreen extends StatelessWidget {
               Text(
                 "johnsafwat.route@gmail.com",
                 style: textTheme.bodyMedium?.copyWith(
-                    color: ColorPalette.lightSecText,
+                    color: provider.themeMode == ThemeMode.light
+                        ? LightColorPalette.lightSecText
+                        : DarkColorPalette.darkSecText,
                     fontWeight: FontWeight.w400),
               ),
               const SizedBox(
@@ -50,19 +55,37 @@ class Profilescreen extends StatelessWidget {
               ),
               Customcontainer(
                 text: "Dark mode",
-                icon: Assets.icons.toggleOff.svg(),
-                onPressed: () {},
+                icon: provider.themeMode == ThemeMode.light
+                    ? Assets.icons.toggleOff.svg()
+                    : Assets.icons.toggleOn.svg(),
+                onPressed: () {
+                  provider.themeMode == ThemeMode.light
+                      ? provider.changeTheme(ThemeMode.dark)
+                      : provider.changeTheme(ThemeMode.light);
+                },
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               Customcontainer(
                 text: "Language",
-                icon: Icon(Icons.arrow_forward_ios_sharp,color: ColorPalette.lightMainColor,),
+                icon: Icon(
+                  Icons.arrow_forward_ios_sharp,
+                  color: provider.themeMode == ThemeMode.light
+                      ? LightColorPalette.lightMainColor
+                      : DarkColorPalette.darkMainColor,
+                ),
                 onPressed: () {},
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               Customcontainer(
                 text: "Logout",
-                icon: Icon(Icons.logout,color: ColorPalette.red,),
+                icon: Icon(
+                  Icons.logout,
+                  color: LightColorPalette.red,
+                ),
                 onPressed: () {},
               )
             ],

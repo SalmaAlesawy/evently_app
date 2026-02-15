@@ -2,15 +2,20 @@ import 'package:eventapp/core/Routes/pages_route_names.dart';
 import 'package:eventapp/core/constants/AppTexts.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../app_setting_provider/app_setting_provider.dart';
 import '../core/gen/assets.gen.dart';
+import '../core/l10n/app_localizations.dart';
 import 'onBoarding_pages_details.dart';
 
 class OnboardingPages extends StatelessWidget {
   static final PageController controller = PageController();
+
   const OnboardingPages({super.key});
   @override
   Widget build(BuildContext context) {
+    final provider=Provider.of<AppSettingProvider>(context);
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
@@ -21,11 +26,12 @@ class OnboardingPages extends StatelessWidget {
                   controller.hasClients ? controller.page?.round() ?? 0 : 0;
               return currentPage != 0
                   ? IconButton(
+                
                       style: ButtonStyle(
                           backgroundColor:
-                              WidgetStatePropertyAll(ColorPalette.white),
+                              WidgetStatePropertyAll( provider.themeMode==ThemeMode.light?LightColorPalette.white:DarkColorPalette.darkInputs),
                           foregroundColor: WidgetStatePropertyAll(
-                              ColorPalette.lightMainColor),
+                              provider.themeMode==ThemeMode.light? LightColorPalette.lightMainColor:DarkColorPalette.white),
                           shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8)))),
                       onPressed: () {
@@ -39,7 +45,7 @@ class OnboardingPages extends StatelessWidget {
                     );
             }),
         backgroundColor: Colors.transparent,
-        title: Assets.images.eventlyLogo.image(width: 243, height: 32),
+        title: provider.themeMode==ThemeMode.light? Assets.images.eventlyLogo.image(width: 243, height: 32):Assets.images.darkEventlyLogo.image(width: 243, height: 32),
         centerTitle: true,
         actions: [
           Padding(
@@ -47,7 +53,8 @@ class OnboardingPages extends StatelessWidget {
             child: ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      WidgetStatePropertyAll(ColorPalette.white),
+                      WidgetStatePropertyAll( provider.themeMode==ThemeMode.light?LightColorPalette.white:DarkColorPalette.darkInputs),
+                  foregroundColor: WidgetStatePropertyAll( provider.themeMode==ThemeMode.light?LightColorPalette.lightMainColor:DarkColorPalette.white),
                   shape: WidgetStatePropertyAll(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadiusGeometry.circular(10),
@@ -60,7 +67,7 @@ class OnboardingPages extends StatelessWidget {
                 child: Text(
                   "Skip",
                   style: textTheme.bodyMedium
-                      ?.copyWith(color: ColorPalette.lightMainColor),
+                      ,
                 )),
           )
         ],
@@ -74,18 +81,18 @@ class OnboardingPages extends StatelessWidget {
               OnboardingPagesDetails(
                 title: AppTexts.onBoardingTitle1,
                 description: AppTexts.onBoardingDescription1,
-                image: Assets.images.hotTrending.keyName,
+                image:  provider.themeMode==ThemeMode.light? Assets.images.hotTrending.keyName:Assets.images.darkHotTrending1.keyName,
               ),
               OnboardingPagesDetails(
                 title: AppTexts.onBoardingTitle2,
                 description: AppTexts.onBoardingDescription2,
-                image: Assets.images.eventPlanning.keyName,
+                image:  provider.themeMode==ThemeMode.light? Assets.images.eventPlanning.keyName:Assets.images.darkEventPlanning.keyName,
               ),
               OnboardingPagesDetails(
                 doneText: "Get Started",
                 title: AppTexts.onBoardingTitle3,
                 description: AppTexts.onBoardingDescription3,
-                image: Assets.images.connectWithFriends.keyName,
+                image:  provider.themeMode==ThemeMode.light? Assets.images.connectWithFriends.keyName:Assets.images.darkSharewithfriends.keyName,
               ),
             ],
           ),

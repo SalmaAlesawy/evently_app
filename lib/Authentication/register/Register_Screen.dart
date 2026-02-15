@@ -1,3 +1,4 @@
+import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:eventapp/core/Routes/pages_route_names.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:eventapp/core/utils/Firebase_auth_utils.dart';
@@ -5,6 +6,7 @@ import 'package:eventapp/widgets/CustomElevatedButton.dart';
 import 'package:eventapp/widgets/CustomeTextButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../core/gen/assets.gen.dart' show Assets;
@@ -32,9 +34,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
+    final provider = Provider.of<AppSettingProvider>(context);
     return SafeArea(
       child: Scaffold(
-        backgroundColor: ColorPalette.lightBackGround,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -64,7 +67,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     Custemtextformfield(
                       controller: _nameController,
-                      obscureText: obscureText,
+                      obscureText: false,
                       hintText: "Enter your name",
                       prefixIcon: Assets.icons.userUnselected.svg(),
                       keyboardType: TextInputType.text,
@@ -82,7 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     Custemtextformfield(
                       controller: _emailController,
-                      obscureText: obscureText,
+                      obscureText: false,
                       hintText: "Enter your email",
                       prefixIcon: Assets.icons.sms.svg(),
                       keyboardType: TextInputType.text,
@@ -131,14 +134,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             setState(() {});
                           },
                           icon: obscureText == true
-                              ? const Icon(Icons.visibility_outlined,
-                                  color: Color(
-                                    0xFFB9B9B9,
-                                  ))
-                              : const Icon(Icons.visibility_off_outlined,
-                                  color: Color(
-                                    0xFFB9B9B9,
-                                  ))),
+                              ? Icon(Icons.visibility_outlined,
+                                  color: provider.themeMode == ThemeMode.light
+                                      ? LightColorPalette.lightDarkDisable
+                                      : DarkColorPalette.lightDarkDisable)
+                              : Icon(Icons.visibility_off_outlined,
+                                  color: provider.themeMode == ThemeMode.light
+                                      ? LightColorPalette.lightDarkDisable
+                                      : DarkColorPalette.lightDarkDisable)),
                     ),
                     const SizedBox(
                       height: 20,
@@ -180,14 +183,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             setState(() {});
                           },
                           icon: obscureText == true
-                              ? const Icon(Icons.visibility_outlined,
-                                  color: Color(
-                                    0xFFB9B9B9,
-                                  ))
-                              : const Icon(Icons.visibility_off_outlined,
-                                  color: Color(
-                                    0xFFB9B9B9,
-                                  ))),
+                              ? Icon(Icons.visibility_outlined,
+                                  color: provider.themeMode == ThemeMode.light
+                                      ? LightColorPalette.lightDarkDisable
+                                      : DarkColorPalette.lightDarkDisable)
+                              : Icon(Icons.visibility_off_outlined,
+                                  color: provider.themeMode == ThemeMode.light
+                                      ? LightColorPalette.lightDarkDisable
+                                      : DarkColorPalette.lightDarkDisable)),
                     ),
                     const SizedBox(
                       height: 60,
@@ -201,22 +204,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   _passwordController.text)
                               .then((value) {
                             EasyLoading.dismiss();
-                            if(value){
+                            if (value) {
                               toastification.show(
                                   title: const Text(
-                                      "User created account successfullty"),
+                                      "User created account successfully"),
                                   type: ToastificationType.success,
                                   alignment: Alignment.center);
                               Navigator.pushReplacementNamed(
                                   context, PageRouteName.loginScreen);
                             }
-
-
-
                           });
-
-
-
                         }
                       },
                     ),
@@ -229,8 +226,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               children: [
                 Text(
                   "Already have an account?",
-                  style: textTheme.bodyMedium
-                      ?.copyWith(color: ColorPalette.lightSecText),
+                  style: textTheme.bodyMedium?.copyWith(
+                      color: provider.themeMode == ThemeMode.light
+                          ? LightColorPalette.lightSecText
+                          : DarkColorPalette.darkSecText),
                 ),
                 Custometextbutton(
                     textButton: "Login",
@@ -246,20 +245,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Text(
               "Or",
               style: textTheme.titleMedium?.copyWith(
-                  color: ColorPalette.lightMainColor,
+                  color: provider.themeMode == ThemeMode.light
+                      ? LightColorPalette.lightMainColor
+                      : DarkColorPalette.darkMainColor,
                   fontWeight: FontWeight.w500),
               textAlign: TextAlign.center,
             ),
             const SizedBox(
               height: 20,
             ),
-            Customelevatedbutton(
-              image: Assets.images.google.keyName,
-              onPressed: () {},
-              buttonText: "Sign up With Google",
-              backGroundColor: WidgetStatePropertyAll(ColorPalette.white),
-              forGroundColor:
-                  WidgetStatePropertyAll(ColorPalette.lightMainColor),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 17.0),
+              child: Customelevatedbutton(
+                image: Assets.images.google.keyName,
+                onPressed: () {},
+                buttonText: "Sign up With Google",
+                backGroundColor: WidgetStatePropertyAll(provider.themeMode==ThemeMode.light? LightColorPalette.white:DarkColorPalette.darkInputs),
+                forGroundColor:
+                WidgetStatePropertyAll(provider.themeMode==ThemeMode.light? LightColorPalette.lightMainColor:DarkColorPalette.darkMainColor),
+              ),
             )
           ],
         ),

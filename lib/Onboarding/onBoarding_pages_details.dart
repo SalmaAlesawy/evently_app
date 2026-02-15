@@ -1,8 +1,10 @@
 import 'package:eventapp/core/Routes/pages_route_names.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../app_setting_provider/app_setting_provider.dart';
 import '../widgets/CustomElevatedButton.dart' show Customelevatedbutton;
 import 'onBoarding_pages.dart';
 
@@ -28,6 +30,8 @@ class OnboardingPagesDetails extends StatefulWidget {
 class _OnboardingPagesDetailsState extends State<OnboardingPagesDetails> {
   @override
   Widget build(BuildContext context) {
+    final provider=Provider.of<AppSettingProvider>(context);
+
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       body: Padding(
@@ -48,7 +52,9 @@ class _OnboardingPagesDetailsState extends State<OnboardingPagesDetails> {
               child: SmoothPageIndicator(
                 controller: OnboardingPagesDetails.controller,
                 count: 3,
-                effect: const WormEffect(
+                effect:  WormEffect(
+                  dotColor:  provider.themeMode==ThemeMode.light?LightColorPalette.lightDarkDisable:DarkColorPalette.white ,
+                  activeDotColor:  provider.themeMode==ThemeMode.light? LightColorPalette.lightMainColor:DarkColorPalette.darkMainColor ,
                   dotWidth: 10,
                   dotHeight: 10,
                 ),
@@ -59,7 +65,7 @@ class _OnboardingPagesDetailsState extends State<OnboardingPagesDetails> {
             ),
             Text(
               widget.title,
-              style: textTheme.titleLarge,
+              style: provider.themeMode==ThemeMode.light? textTheme.titleLarge:textTheme.titleLarge?.copyWith(color: Colors.white),
             ),
             const SizedBox(
               height: 10,
@@ -68,15 +74,15 @@ class _OnboardingPagesDetailsState extends State<OnboardingPagesDetails> {
               flex: 2,
               child: Text(
                 widget.description,
-                style: textTheme.titleMedium,
+                style: provider.themeMode==ThemeMode.light? textTheme.titleMedium:textTheme.titleLarge?.copyWith(color: Colors.white),
               ),
             ),
             const SizedBox(
               height: 16,
             ),
             Customelevatedbutton(
-              backGroundColor:WidgetStatePropertyAll(ColorPalette.lightMainColor) ,
-              forGroundColor:WidgetStatePropertyAll(ColorPalette.white) ,
+              backGroundColor:WidgetStatePropertyAll( provider.themeMode==ThemeMode.light?LightColorPalette.lightMainColor:DarkColorPalette.darkMainColor) ,
+              forGroundColor:WidgetStatePropertyAll(LightColorPalette.white) ,
               buttonText: widget.doneText ?? "Next",
               onPressed: () {
                 OnboardingPagesDetails.controller.nextPage(

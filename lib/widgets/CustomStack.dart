@@ -1,13 +1,15 @@
+import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:eventapp/core/utils/firestore.dart';
 import 'package:eventapp/models/event_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../core/gen/assets.gen.dart';
 import '../core/theme/ColorPalette.dart';
 
 class Customstack extends StatefulWidget {
-   EventDataModel dataModel;
+  EventDataModel dataModel;
   Customstack({super.key, required this.dataModel});
 
   @override
@@ -17,11 +19,15 @@ class Customstack extends StatefulWidget {
 class _CustomstackState extends State<Customstack> {
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<AppSettingProvider>(context);
 
     TextTheme textTheme = Theme.of(context).textTheme;
     return Stack(
       children: [
-        Image(image: AssetImage(widget.dataModel.categoryImg)),
+        Image(
+            image: provider.themeMode == ThemeMode.light
+                ? AssetImage(widget.dataModel.categoryImg)
+                : AssetImage(widget.dataModel.categoryDarkImg)),
         Positioned(
           top: 10,
           left: 10,
@@ -32,12 +38,16 @@ class _CustomstackState extends State<Customstack> {
             height: 40,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: ColorPalette.lightBackGround,
+              color: provider.themeMode == ThemeMode.light
+                  ? LightColorPalette.lightBackGround
+                  : DarkColorPalette.darkBackGround,
             ),
             child: Text(
               DateFormat("dd MMM").format(widget.dataModel.eventDate),
               style: textTheme.titleMedium?.copyWith(
-                  color: ColorPalette.lightMainColor,
+                  color: provider.themeMode == ThemeMode.light
+                      ? LightColorPalette.lightMainColor
+                      : DarkColorPalette.darkMainColor,
                   fontWeight: FontWeight.w600),
             ),
           ),
@@ -47,21 +57,30 @@ class _CustomstackState extends State<Customstack> {
           left: 10,
           right: 10,
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            color: ColorPalette.lightBackGround,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: provider.themeMode == ThemeMode.light
+                  ? LightColorPalette.lightBackGround
+                  : DarkColorPalette.darkBackGround,
+            ),
+            padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   widget.dataModel.eventDescription,
                   style: textTheme.bodyMedium?.copyWith(
-                      color: ColorPalette.lightMainText,
-                      fontWeight: FontWeight.w500),
+                      color:provider.themeMode==ThemeMode.light? LightColorPalette.lightMainText:DarkColorPalette.white,
+                      fontWeight: FontWeight.bold),
                 ),
                 InkWell(
-                  onTap: (){
-                    widget.dataModel.isFavorite=!widget.dataModel.isFavorite;
-                   FireStoreUtils.updateEvent(widget.dataModel);
+                    onTap: () {
+                      widget.dataModel.isFavorite =
+                          !widget.dataModel.isFavorite;
+                      FireStoreUtils.updateEvent(widget.dataModel);
+                      setState(() {
+
+                      });
                     },
                     child: widget.dataModel.isFavorite
                         ? Assets.icons.heartSelected.svg()

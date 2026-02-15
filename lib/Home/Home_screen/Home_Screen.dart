@@ -59,7 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text(
           "Welcome Back ✨",
           style: textTheme.bodyMedium?.copyWith(
-              color: ColorPalette.lightSecText, fontWeight: FontWeight.w400),
+              color: provider.themeMode == ThemeMode.light
+                  ? LightColorPalette.lightSecText
+                  : DarkColorPalette.darkSecText,
+              fontWeight: FontWeight.w400),
         ),
         automaticallyImplyLeading: false,
         actions: [
@@ -84,7 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 32,
               margin: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                  color: ColorPalette.lightMainColor,
+                  color: provider.themeMode == ThemeMode.light
+                      ? LightColorPalette.lightMainColor
+                      : DarkColorPalette.darkMainColor,
                   borderRadius: BorderRadius.circular(8)),
               child: Center(
                   child: provider.currentLanguage == 'ar'
@@ -108,8 +113,10 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(
               "Jone Safwat",
               style: textTheme.titleLarge?.copyWith(
-                  color: ColorPalette.lightMainText,
-                  fontWeight: FontWeight.w500),
+                  color: provider.themeMode == ThemeMode.light
+                      ? LightColorPalette.lightMainText
+                      : DarkColorPalette.white,
+                  fontWeight: FontWeight.bold),
             ),
             const SizedBox(
               height: 20,
@@ -165,15 +172,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: textTheme.titleMedium,
                         ))
                       : Expanded(
-                        child: ListView.separated(
+                          child: ListView.separated(
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                Eventdetails(event: dataList[index])));
+                                            builder: (context) => Eventdetails(
+                                                event: dataList[index])));
                                   },
                                   child: Customstack(
                                     dataModel: dataList[index],
@@ -186,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               },
                               itemCount: dataList.length),
-                      );
+                        );
                 })
           ],
         ),

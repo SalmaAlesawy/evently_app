@@ -1,4 +1,6 @@
+import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../core/theme/ColorPalette.dart';
 
@@ -9,6 +11,7 @@ class Custometextbutton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider=Provider.of<AppSettingProvider>(context);
     return TextButton(
       style: ButtonStyle(
         overlayColor:
@@ -16,7 +19,7 @@ class Custometextbutton extends StatelessWidget {
         shadowColor:
         const WidgetStatePropertyAll(Colors.transparent),
         foregroundColor:
-        WidgetStatePropertyAll(ColorPalette.lightMainColor),
+        WidgetStatePropertyAll(provider.themeMode==ThemeMode.light?LightColorPalette.lightMainColor:DarkColorPalette.darkMainColor),
         alignment: Alignment.centerRight,
       ),
       onPressed: onpressed,
@@ -24,7 +27,7 @@ class Custometextbutton extends StatelessWidget {
         style: TextStyle(
             decoration: TextDecoration.underline,
             decorationThickness: 2,
-            decorationColor: ColorPalette.lightMainColor),
+            decorationColor: LightColorPalette.lightMainColor),
         textButton,
       ),
     );

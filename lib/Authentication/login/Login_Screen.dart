@@ -34,9 +34,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final appLocalization=AppLocalizations.of(context)!;
     TextTheme textTheme = Theme.of(context).textTheme;
+    final provider=Provider.of<AppSettingProvider>(context);
     return SafeArea(
       child: Scaffold(
-        backgroundColor: ColorPalette.lightBackGround,
         body: Padding(
           padding: const EdgeInsets.all(32.0),
           child: Form(
@@ -45,13 +45,13 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Assets.images.eventlyLogo.image(width: 142, height: 27),
+               provider.themeMode==ThemeMode.light? Assets.images.eventlyLogo.image(width: 142, height: 27):Assets.images.darkEventlyLogo.image(width: 142, height: 27),
                 const SizedBox(
                   height: 30,
                 ),
                 Text(
                   "Login to your account",
-                  style: textTheme.headlineSmall,
+                  style:provider.themeMode==ThemeMode.light? textTheme.headlineSmall:textTheme.headlineSmall?.copyWith(color: DarkColorPalette.white),
                 ),
                 const SizedBox(
                   height: 30,
@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Custemtextformfield(
                   controller: _emailController,
                   keyboardType: TextInputType.text,
-                  obscureText: obscureText,
+                  obscureText: false,
                   prefixIcon: Assets.icons.sms.svg(width: 24, height: 24),
                   hintText: appLocalization.email,
                   validator: (value) {
@@ -85,14 +85,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         setState(() {});
                       },
                       icon: obscureText == true
-                          ? const Icon(Icons.visibility_outlined,
-                              color: Color(
-                                0xFFB9B9B9,
-                              ))
-                          : const Icon(Icons.visibility_off_outlined,
-                              color: Color(
-                                0xFFB9B9B9,
-                              ))),
+                          ? Icon(Icons.visibility_off_outlined,
+                              color: LightColorPalette.lightDarkDisable)
+                          :  Icon(Icons.visibility_outlined,
+                              color:LightColorPalette.lightDarkDisable)),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Password is required';
@@ -132,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       FireBaseAuthUtils.signInWithEmailAndPassword(_emailController.text, _passwordController.text).then((value){
                         EasyLoading.dismiss();
                         if(value){
-                          toastification.show(title: const Text("Login Successfly"),type: ToastificationType.success,alignment: Alignment.center);
+                          toastification.show(title: const Text("Login Successfully"),type: ToastificationType.success,alignment: Alignment.center);
                           Navigator.pushReplacementNamed(context, PageRouteName.layoutScreen);
                         }
                       });
@@ -150,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       "Don't have an account?",
                       style: textTheme.bodyMedium
-                          ?.copyWith(color: ColorPalette.lightSecText),
+                          ?.copyWith(color:provider.themeMode==ThemeMode.light? LightColorPalette.lightSecText:DarkColorPalette.darkSecText),
                     ),
                     Custometextbutton(
 
@@ -165,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text(
                   "Or",
                   style: textTheme.titleMedium?.copyWith(
-                      color: ColorPalette.lightMainColor,
+                      color: provider.themeMode==ThemeMode.light? LightColorPalette.lightMainColor:DarkColorPalette.darkMainColor,
                       fontWeight: FontWeight.w500),
                   textAlign: TextAlign.center,
                 ),
@@ -176,9 +172,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   image: Assets.images.google.keyName,
                   onPressed: () {},
                   buttonText: "Login With Google",
-                  backGroundColor: WidgetStatePropertyAll(ColorPalette.white),
+                  backGroundColor: WidgetStatePropertyAll(provider.themeMode==ThemeMode.light? LightColorPalette.white:DarkColorPalette.darkInputs),
                   forGroundColor:
-                      WidgetStatePropertyAll(ColorPalette.lightMainColor),
+                      WidgetStatePropertyAll(provider.themeMode==ThemeMode.light? LightColorPalette.lightMainColor:DarkColorPalette.darkMainColor),
                 )
               ],
             ),

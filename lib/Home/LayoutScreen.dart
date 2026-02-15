@@ -33,8 +33,8 @@ class _LayoutscreenState extends State<Layoutscreen> {
           onPressed: () {
             Navigator.pushNamed(context, PageRouteName.addEvent);
           },
-          backgroundColor: ColorPalette.lightMainColor,
-          foregroundColor: ColorPalette.white,
+          backgroundColor: provider.themeMode==ThemeMode.light? LightColorPalette.lightMainColor:DarkColorPalette.darkMainColor,
+          foregroundColor: LightColorPalette.white,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
           child: const Icon(Icons.add),
@@ -49,7 +49,7 @@ class _LayoutscreenState extends State<Layoutscreen> {
             enableFeedback: false,
             backgroundColor: Colors.transparent,
               selectedFontSize: 12,
-              selectedItemColor: ColorPalette.lightMainColor,
+              selectedItemColor: provider.themeMode==ThemeMode.light? LightColorPalette.lightMainColor:DarkColorPalette.darkMainColor,
               onTap: provider.changeCurrentIndex,
               currentIndex:provider.currentIndex ,
               items: [

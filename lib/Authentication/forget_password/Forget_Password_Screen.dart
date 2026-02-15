@@ -1,6 +1,8 @@
+import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:eventapp/widgets/CustomAppBar.dart';
 import 'package:eventapp/widgets/CustomElevatedButton.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/gen/assets.gen.dart' show Assets;
 
@@ -9,6 +11,7 @@ class ForgetPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider=Provider.of<AppSettingProvider>(context);
     return SafeArea(
       child: Scaffold(
         appBar: const Customappbar(title: "Forget Password",),
@@ -17,7 +20,7 @@ class ForgetPasswordScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Assets.images.resetPassword.image(),
+             provider.themeMode==ThemeMode.light? Assets.images.resetPassword.image():Assets.images.darkresetPassword.image(),
               const SizedBox(
                 height: 30,
               ),

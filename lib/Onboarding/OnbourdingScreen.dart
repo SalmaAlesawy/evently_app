@@ -26,17 +26,17 @@ class Onbourdingscreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Assets.images.beingCreative.image(),
+           provider.themeMode==ThemeMode.light? Assets.images.beingCreative.image():Assets.images.darkBeingCreative3.image(),
             Text(
               appLocalization.onboarding_title_1,
-              style: textTheme.titleLarge,
+              style: provider.themeMode==ThemeMode.light? textTheme.titleLarge:textTheme.titleLarge?.copyWith(color: DarkColorPalette.white),
             ),
             const SizedBox(
               height: 20,
             ),
             Text(
               appLocalization.onboarding_description_1,
-              style: textTheme.titleMedium,
+              style: provider.themeMode==ThemeMode.light? textTheme.titleMedium:textTheme.titleMedium?.copyWith(color: DarkColorPalette.darkSecText),
             ),
             const SizedBox(
               height: 40,
@@ -46,36 +46,36 @@ class Onbourdingscreen extends StatelessWidget {
                 Expanded(
                   child: Text(
                     appLocalization.language,
-                    style: textTheme.bodyLarge,
+                    style: provider.themeMode==ThemeMode.light? textTheme.bodyLarge:textTheme.bodyLarge?.copyWith(color: Colors.white),
                   ),
                 ),
                 ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
-                            WidgetStatePropertyAll(ColorPalette.lightMainColor),
+                            WidgetStatePropertyAll( provider.themeMode==ThemeMode.light?LightColorPalette.lightMainColor:DarkColorPalette.darkMainColor),
                         foregroundColor:
-                            WidgetStatePropertyAll(ColorPalette.white),
+                            WidgetStatePropertyAll(LightColorPalette.white),
                         shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)))),
                     onPressed: () {
                       provider.setEnglish();
                     },
-                    child:  Text(appLocalization.english)),
+                    child:Text(appLocalization.english)),
                 const SizedBox(
                   width: 5,
                 ),
                 ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
-                            WidgetStatePropertyAll(ColorPalette.white),
+                            WidgetStatePropertyAll( provider.themeMode==ThemeMode.light?LightColorPalette.white:DarkColorPalette.darkInputs),
                         foregroundColor:
-                            WidgetStatePropertyAll(ColorPalette.lightMainColor),
+                            WidgetStatePropertyAll( provider.themeMode==ThemeMode.light?LightColorPalette.lightMainColor:DarkColorPalette.white),
                         shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)))),
                     onPressed: () {
                       provider.setArabic();
                     },
-                    child:  Text(appLocalization.arabic)),
+                    child:Text(appLocalization.arabic)),
               ],
             ),
             const SizedBox(height: 30,),
@@ -84,15 +84,13 @@ class Onbourdingscreen extends StatelessWidget {
                 Expanded(
                   child: Text(
                     appLocalization.theme,
-                    style: textTheme.bodyLarge,
+                    style: provider.themeMode==ThemeMode.light? textTheme.bodyLarge:textTheme.bodyLarge?.copyWith(color: DarkColorPalette.white),
                   ),
                 ),
                 ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor:
-                          WidgetStatePropertyAll(ColorPalette.lightMainColor),
-                      foregroundColor:
-                          WidgetStatePropertyAll(ColorPalette.white),
+                          WidgetStatePropertyAll( provider.themeMode==ThemeMode.light?LightColorPalette.lightMainColor:DarkColorPalette.darkInputs),
                       shape: WidgetStatePropertyAll(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -109,9 +107,9 @@ class Onbourdingscreen extends StatelessWidget {
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        WidgetStatePropertyAll(ColorPalette.white),
+                        WidgetStatePropertyAll( provider.themeMode==ThemeMode.light?LightColorPalette.white:DarkColorPalette.darkMainColor),
                     foregroundColor:
-                        WidgetStatePropertyAll(ColorPalette.lightMainColor),
+                        WidgetStatePropertyAll(LightColorPalette.white),
                     shape: WidgetStatePropertyAll(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -121,7 +119,7 @@ class Onbourdingscreen extends StatelessWidget {
                   onPressed: () {
                     provider.setDark();
                   },
-                  child: Assets.icons.moon.svg(),
+                  child: provider.themeMode==ThemeMode.light? Assets.icons.moon.svg():Assets.icons.vector.svg(),
                 )
               ],
             ),
@@ -133,9 +131,9 @@ class Onbourdingscreen extends StatelessWidget {
                 child: ElevatedButton(
                     style: ButtonStyle(
                       backgroundColor:
-                          WidgetStatePropertyAll(ColorPalette.lightMainColor),
+                          WidgetStatePropertyAll( provider.themeMode==ThemeMode.light?LightColorPalette.lightMainColor:DarkColorPalette.darkMainColor),
                       foregroundColor:
-                          WidgetStatePropertyAll(ColorPalette.white),
+                          WidgetStatePropertyAll(LightColorPalette.white),
                       shape: WidgetStatePropertyAll(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -145,7 +143,7 @@ class Onbourdingscreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushReplacementNamed(context, PageRouteName.onBoardingPages);
                     },
-                    child:  Text(appLocalization.start,style: textTheme.titleLarge?.copyWith(color: ColorPalette.white),)),
+                    child:  Text(appLocalization.start,style: textTheme.titleLarge?.copyWith(color: LightColorPalette.white),)),
               ),
             )
           ],

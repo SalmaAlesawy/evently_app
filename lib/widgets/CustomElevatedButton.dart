@@ -1,5 +1,7 @@
+import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Customelevatedbutton extends StatelessWidget {
   const Customelevatedbutton(
@@ -18,14 +20,15 @@ class Customelevatedbutton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
+    final provider=Provider.of<AppSettingProvider>(context);
     return ElevatedButton(
         style: ButtonStyle(
             shadowColor: const WidgetStatePropertyAll(Colors.transparent),
             overlayColor: const WidgetStatePropertyAll(Colors.transparent),
             backgroundColor: backGroundColor ??
-                WidgetStatePropertyAll(ColorPalette.lightMainColor),
+                WidgetStatePropertyAll(provider.themeMode==ThemeMode.light?LightColorPalette.lightMainColor:DarkColorPalette.darkMainColor),
             foregroundColor:
-                forGroundColor ?? WidgetStatePropertyAll(ColorPalette.white),
+                forGroundColor ?? WidgetStatePropertyAll(LightColorPalette.white),
             textStyle: WidgetStatePropertyAll(textTheme.titleLarge),
             padding: const WidgetStatePropertyAll(
                 EdgeInsets.symmetric(vertical: 16)),

@@ -18,7 +18,7 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(ChangeNotifierProvider(
-    create: (context) => AppSettingProvider(),
+    create: (_) => AppSettingProvider(),
     child: const MyApp(),
   ));
   configLoading();
@@ -30,11 +30,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<AppSettingProvider>(context, listen: false);
+     print("MyApp rebuild");
+    final provider = Provider.of<AppSettingProvider>(context, listen: true);
     return ToastificationWrapper(
       child: MaterialApp(
         title: 'Flutter Demo',
-        themeMode: provider.themeMode,
+        themeMode:provider.themeMode,
         theme: ThemeManager.getLightTheme(),
         darkTheme: ThemeManager.getDarkTheme(),
         locale: Locale(provider.currentLanguage),

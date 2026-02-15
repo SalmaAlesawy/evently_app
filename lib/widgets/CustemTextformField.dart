@@ -1,5 +1,7 @@
+import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 
 class Custemtextformfield extends StatelessWidget {
@@ -26,18 +28,19 @@ class Custemtextformfield extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
+    final provider=Provider.of<AppSettingProvider>(context);
     return SizedBox(
       child: TextFormField(
         maxLines: maxLines,
         controller: controller,
         validator: validator,
-        style: const TextStyle(color: Colors.black),
+        style:  TextStyle(color:provider.themeMode==ThemeMode.light?LightColorPalette.lightSecText:DarkColorPalette.darkSecText ),
         obscureText: obscureText,
         keyboardType: keyboardType,
         decoration: InputDecoration(
             hintText: hintText,
             hintStyle: textTheme.bodyMedium?.copyWith(
-              color: ColorPalette.lightSecText,
+              color:provider.themeMode==ThemeMode.light? LightColorPalette.lightSecText:DarkColorPalette.darkSecText,
             ),
             prefixIcon:prefixIcon==null?null: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -47,7 +50,7 @@ class Custemtextformfield extends StatelessWidget {
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
                 borderSide: BorderSide.none),
-            fillColor: ColorPalette.white,
+            fillColor:provider.themeMode==ThemeMode.light? LightColorPalette.white:DarkColorPalette.darkInputs,
             filled: true),
       ),
     );

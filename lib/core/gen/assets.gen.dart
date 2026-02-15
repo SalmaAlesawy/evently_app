@@ -27,6 +27,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ToggleOff.svg
   SvgGenImage get toggleOff => const SvgGenImage('assets/icons/ToggleOff.svg');
 
+  /// File path: assets/icons/ToggleOn.svg
+  SvgGenImage get toggleOn => const SvgGenImage('assets/icons/ToggleOn.svg');
+
+  /// File path: assets/icons/Vector.svg
+  SvgGenImage get vector => const SvgGenImage('assets/icons/Vector.svg');
+
   /// File path: assets/icons/birthday-cake.svg
   SvgGenImage get birthdayCake =>
       const SvgGenImage('assets/icons/birthday-cake.svg');
@@ -82,6 +88,8 @@ class $AssetsIconsGen {
     en,
     sportIcon,
     toggleOff,
+    toggleOn,
+    vector,
     birthdayCake,
     edit2,
     heartSelected,
@@ -184,6 +192,10 @@ class $AssetsImagesGen {
   AssetGenImage get darkSharewithfriends =>
       const AssetGenImage('assets/images/dark_sharewithfriends.png');
 
+  /// File path: assets/images/darkresetPassword.png
+  AssetGenImage get darkresetPassword =>
+      const AssetGenImage('assets/images/darkresetPassword.png');
+
   /// File path: assets/images/event_planning.png
   AssetGenImage get eventPlanning =>
       const AssetGenImage('assets/images/event_planning.png');
@@ -222,6 +234,7 @@ class $AssetsImagesGen {
     darkBeingCreative3,
     darkEventPlanning,
     darkSharewithfriends,
+    darkresetPassword,
     eventPlanning,
     google,
     hotTrending,

@@ -1,4 +1,3 @@
-import 'package:eventapp/core/theme/ColorPalette.dart';
 import 'package:eventapp/core/utils/firestore.dart';
 import 'package:eventapp/models/event_data_model.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +40,6 @@ class Favouratescreen extends StatelessWidget {
     TextTheme textTheme=Theme.of(context).textTheme;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: ColorPalette.lightBackGround,
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(

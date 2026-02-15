@@ -1,5 +1,7 @@
+import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:eventapp/widgets/CustomInkwell.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../core/gen/assets.gen.dart';
 import '../core/theme/ColorPalette.dart';
@@ -14,17 +16,19 @@ class Customappbar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider=Provider.of<AppSettingProvider>(context);
+    TextTheme textTheme=Theme.of(context).textTheme;
     return AppBar(
       backgroundColor: Colors.transparent,
-      title: Text(title),
+      title: Text(title,style: provider.themeMode==ThemeMode.light?textTheme.bodyLarge?.copyWith(color: LightColorPalette.lightMainText):textTheme.bodyLarge?.copyWith(color: LightColorPalette.white) ,),
       centerTitle: true,
       leading: IconButton(
           style: ButtonStyle(
             foregroundColor:
-                WidgetStatePropertyAll(ColorPalette.lightMainColor),
+                WidgetStatePropertyAll(provider.themeMode==ThemeMode.light?LightColorPalette.lightMainColor:DarkColorPalette.white),
             shape: WidgetStatePropertyAll(
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-            backgroundColor: WidgetStatePropertyAll(ColorPalette.white),
+            backgroundColor: WidgetStatePropertyAll(provider.themeMode==ThemeMode.light?LightColorPalette.white:DarkColorPalette.darkInputs),
           ),
           onPressed: () {
             Navigator.pop(context);
