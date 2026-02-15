@@ -5,6 +5,7 @@ import 'package:eventapp/core/utils/firestore.dart';
 import 'package:eventapp/models/event_data_model.dart';
 import 'package:eventapp/widgets/CustomListView.dart';
 import 'package:eventapp/widgets/CustomStack.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/gen/assets.gen.dart';
@@ -50,6 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+    String? name = user?.displayName;
     final provider = Provider.of<AppSettingProvider>(context);
     TextTheme textTheme = Theme.of(context).textTheme;
     ThemeData theme = Theme.of(context);
@@ -111,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Jone Safwat",
+              name == null ? "Salma" : name,
               style: textTheme.titleLarge?.copyWith(
                   color: provider.themeMode == ThemeMode.light
                       ? LightColorPalette.lightMainText

@@ -1,4 +1,5 @@
 import 'package:eventapp/models/eventCategoryData.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../core/gen/assets.gen.dart';
@@ -78,4 +79,13 @@ class AppSettingProvider extends ChangeNotifier {
             imgDark: '',
             icn: Icons.meeting_room_outlined),
       ];
+
+  String name="";
+  String email="";
+  Future<void> loadUserData()async{
+    var user=FirebaseAuth.instance.currentUser;
+    name=user?.displayName??"";
+    email=user?.email??"";
+    notifyListeners();
+  }
 }

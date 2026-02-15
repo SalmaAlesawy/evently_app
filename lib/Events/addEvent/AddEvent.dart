@@ -77,210 +77,212 @@ class _AddeventState extends State<Addevent> {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Form(
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Image(
-                  image: AssetImage(provider.themeMode == ThemeMode.light
-                      ? categoriesDataList[_currentIndex].image
-                      : categoriesDataList[_currentIndex].imgDark)),
-              const SizedBox(
-                height: 20,
-              ),
-              DefaultTabController(
-                length: categoriesDataList.length,
-                child: TabBar(
-                  tabAlignment: TabAlignment.start,
-                  labelPadding: const EdgeInsets.symmetric(horizontal: 8),
-                  padding: EdgeInsets.zero,
-                  onTap: (index) {
-                    setState(() {
-                      _currentIndex = index;
-                    });
-                  },
-                  isScrollable: true,
-                  indicator: const BoxDecoration(),
-                  dividerColor: Colors.transparent,
-                  //indicatorColor: Colors.transparent,
-                  tabs: categoriesDataList.map((data) {
-                    return Customelistview(
-                      eventCategoryData: data,
-                      isSelected:
-                          _currentIndex == categoriesDataList.indexOf(data),
-                    );
-                  }).toList(),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(
+                  height: 20,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Title",
-                style: textTheme.titleMedium?.copyWith(
-                    color: provider.themeMode == ThemeMode.light
-                        ? LightColorPalette.lightMainText
-                        : DarkColorPalette.white,
-                    fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Custemtextformfield(
-                controller: titleController,
-                hintText: 'Event Title',
-                obscureText: false,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return "Enter title";
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text("Description",
+                Image(
+                    image: AssetImage(provider.themeMode == ThemeMode.light
+                        ? categoriesDataList[_currentIndex].image
+                        : categoriesDataList[_currentIndex].imgDark)),
+                const SizedBox(
+                  height: 20,
+                ),
+                DefaultTabController(
+                  length: categoriesDataList.length,
+                  child: TabBar(
+                    tabAlignment: TabAlignment.start,
+                    labelPadding: const EdgeInsets.symmetric(horizontal: 8),
+                    padding: EdgeInsets.zero,
+                    onTap: (index) {
+                      setState(() {
+                        _currentIndex = index;
+                      });
+                    },
+                    isScrollable: true,
+                    indicator: const BoxDecoration(),
+                    dividerColor: Colors.transparent,
+                    //indicatorColor: Colors.transparent,
+                    tabs: categoriesDataList.map((data) {
+                      return Customelistview(
+                        eventCategoryData: data,
+                        isSelected:
+                            _currentIndex == categoriesDataList.indexOf(data),
+                      );
+                    }).toList(),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Title",
                   style: textTheme.titleMedium?.copyWith(
                       color: provider.themeMode == ThemeMode.light
                           ? LightColorPalette.lightMainText
                           : DarkColorPalette.white,
-                      fontWeight: FontWeight.bold)),
-              const SizedBox(
-                height: 8,
-              ),
-              Custemtextformfield(
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return "Enter description";
-                  }
-                  return null;
-                },
-                controller: descriptionController,
-                hintText: 'Event Description',
-                obscureText: false,
-                maxLines: 6,
-              ),
-              Customlisttile(
-                  onPressed: () {
-                    getSelectedDate();
+                      fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Custemtextformfield(
+                  controller: titleController,
+                  hintText: 'Event Title',
+                  obscureText: false,
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return "Enter title";
+                    }
+                    return null;
                   },
-                  leading: Icon(
-                    Icons.calendar_month_outlined,
-                    color: provider.themeMode == ThemeMode.light
-                        ? LightColorPalette.lightDarkDisable
-                        : DarkColorPalette.darkMainColor,
-                  ),
-                  titleText: 'Event Date',
-                  trailingText: selectedEventDate != null
-                      ? (DateFormat("dd, MMM yyyy").format(selectedEventDate!))
-                      : widget.event?.eventDate != null
-                          ? (DateFormat("dd, MMM yyyy")
-                              .format(widget.event!.eventDate))
-                          : "Choose data"),
-              const SizedBox(
-                height: 10,
-              ),
-              Customlisttile(
-                  onPressed: () {
-                    getSelectedTime();
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text("Description",
+                    style: textTheme.titleMedium?.copyWith(
+                        color: provider.themeMode == ThemeMode.light
+                            ? LightColorPalette.lightMainText
+                            : DarkColorPalette.white,
+                        fontWeight: FontWeight.bold)),
+                const SizedBox(
+                  height: 8,
+                ),
+                Custemtextformfield(
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return "Enter description";
+                    }
+                    return null;
                   },
-                  leading: Icon(
-                    Icons.access_time_outlined,
-                    color: provider.themeMode == ThemeMode.light
-                        ? LightColorPalette.lightDarkDisable
-                        : DarkColorPalette.darkMainColor,
-                  ),
-                  titleText: 'Event Time',
-                  trailingText: selectedEventTime != null
-                      ? selectedEventTime!.format(context)
-                      : widget.event?.eventTime != null
-                          ? widget.event?.eventTime!.format(context) ?? ""
-                          : "Choose time"),
-              const SizedBox(
-                height: 10,
-              ),
-              widget.isUpdate == false
-                  ? Customelevatedbutton(
-                      buttonText: "Add event",
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          EasyLoading.show();
-                          EventDataModel data = EventDataModel(
-                              eventTime: selectedEventTime!,
-                              isFavorite: false,
-                              eventTitle: titleController.text,
-                              eventDescription: descriptionController.text,
-                              eventDate: selectedEventDate!,
-                              eventCategoryId:
-                                  categoriesDataList[_currentIndex].id,
-                              categoryImg:
-                                  categoriesDataList[_currentIndex].image,
-                              categoryDarkImg:
-                                  categoriesDataList[_currentIndex].imgDark);
-
-                          bool value = await FireStoreUtils.addEvent(data);
-                          EasyLoading.dismiss();
-                          if (value) {
-                            toastification.show(
-                                title: const Text("Event added successfully"),
-                                autoCloseDuration: const Duration(seconds: 2),
-                                type: ToastificationType.success,
-                                alignment: Alignment.center);
-                            Navigator.pop(context);
-                          } else {
-                            toastification.show(
-                                title: const Text(
-                                    "Event have not added successfully"),
-                                autoCloseDuration: const Duration(seconds: 2),
-                                type: ToastificationType.error,
-                                alignment: Alignment.center);
+                  controller: descriptionController,
+                  hintText: 'Event Description',
+                  obscureText: false,
+                  maxLines: 6,
+                ),
+                Customlisttile(
+                    onPressed: () {
+                      getSelectedDate();
+                    },
+                    leading: Icon(
+                      Icons.calendar_month_outlined,
+                      color: provider.themeMode == ThemeMode.light
+                          ? LightColorPalette.lightDarkDisable
+                          : DarkColorPalette.darkMainColor,
+                    ),
+                    titleText: 'Event Date',
+                    trailingText: selectedEventDate != null
+                        ? (DateFormat("dd, MMM yyyy").format(selectedEventDate!))
+                        : widget.event?.eventDate != null
+                            ? (DateFormat("dd, MMM yyyy")
+                                .format(widget.event!.eventDate))
+                            : "Choose data"),
+                const SizedBox(
+                  height: 10,
+                ),
+                Customlisttile(
+                    onPressed: () {
+                      getSelectedTime();
+                    },
+                    leading: Icon(
+                      Icons.access_time_outlined,
+                      color: provider.themeMode == ThemeMode.light
+                          ? LightColorPalette.lightDarkDisable
+                          : DarkColorPalette.darkMainColor,
+                    ),
+                    titleText: 'Event Time',
+                    trailingText: selectedEventTime != null
+                        ? selectedEventTime!.format(context)
+                        : widget.event?.eventTime != null
+                            ? widget.event?.eventTime!.format(context) ?? ""
+                            : "Choose time"),
+                const SizedBox(
+                  height: 10,
+                ),
+                widget.isUpdate == false
+                    ? Customelevatedbutton(
+                        buttonText: "Add event",
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            EasyLoading.show();
+                            EventDataModel data = EventDataModel(
+                                eventTime: selectedEventTime!,
+                                isFavorite: false,
+                                eventTitle: titleController.text,
+                                eventDescription: descriptionController.text,
+                                eventDate: selectedEventDate!,
+                                eventCategoryId:
+                                    categoriesDataList[_currentIndex].id,
+                                categoryImg:
+                                    categoriesDataList[_currentIndex].image,
+                                categoryDarkImg:
+                                    categoriesDataList[_currentIndex].imgDark);
+            
+                            bool value = await FireStoreUtils.addEvent(data);
+                            EasyLoading.dismiss();
+                            if (value) {
+                              toastification.show(
+                                  title: const Text("Event added successfully"),
+                                  autoCloseDuration: const Duration(seconds: 2),
+                                  type: ToastificationType.success,
+                                  alignment: Alignment.center);
+                              Navigator.pop(context);
+                            } else {
+                              toastification.show(
+                                  title: const Text(
+                                      "Event have not added successfully"),
+                                  autoCloseDuration: const Duration(seconds: 2),
+                                  type: ToastificationType.error,
+                                  alignment: Alignment.center);
+                            }
                           }
-                        }
-                      },
-                    )
-                  : Customelevatedbutton(
-                      buttonText: "Update Event",
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          EasyLoading.show();
-                          EventDataModel data = EventDataModel(
-                              eventId: widget.event?.eventId,
-                              eventTime: selectedEventTime,
-                              isFavorite: false,
-                              eventTitle: titleController.text,
-                              eventDescription: descriptionController.text,
-                              eventDate: selectedEventDate!,
-                              eventCategoryId:
-                                  categoriesDataList[_currentIndex].id,
-                              categoryImg:
-                                  categoriesDataList[_currentIndex].image,
-                              categoryDarkImg:
-                                  categoriesDataList[_currentIndex].imgDark);
-
-                          bool value = await FireStoreUtils.updateEvent(data);
-                          EasyLoading.dismiss();
-                          if (value) {
-                            toastification.show(
-                                title: const Text("Event updated successfully"),
-                                autoCloseDuration: const Duration(seconds: 2),
-                                type: ToastificationType.success,
-                                alignment: Alignment.center);
-                            Navigator.pop(context);
-                          } else {
-                            toastification.show(
-                                title: const Text(
-                                    "Event have not updated successfully"),
-                                autoCloseDuration: const Duration(seconds: 2),
-                                type: ToastificationType.error,
-                                alignment: Alignment.center);
+                        },
+                      )
+                    : Customelevatedbutton(
+                        buttonText: "Update Event",
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            EasyLoading.show();
+                            EventDataModel data = EventDataModel(
+                                eventId: widget.event?.eventId,
+                                eventTime: selectedEventTime,
+                                isFavorite: false,
+                                eventTitle: titleController.text,
+                                eventDescription: descriptionController.text,
+                                eventDate: selectedEventDate!,
+                                eventCategoryId:
+                                    categoriesDataList[_currentIndex].id,
+                                categoryImg:
+                                    categoriesDataList[_currentIndex].image,
+                                categoryDarkImg:
+                                    categoriesDataList[_currentIndex].imgDark);
+            
+                            bool value = await FireStoreUtils.updateEvent(data);
+                            EasyLoading.dismiss();
+                            if (value) {
+                              toastification.show(
+                                  title: const Text("Event updated successfully"),
+                                  autoCloseDuration: const Duration(seconds: 2),
+                                  type: ToastificationType.success,
+                                  alignment: Alignment.center);
+                              Navigator.pop(context);
+                            } else {
+                              toastification.show(
+                                  title: const Text(
+                                      "Event have not updated successfully"),
+                                  autoCloseDuration: const Duration(seconds: 2),
+                                  type: ToastificationType.error,
+                                  alignment: Alignment.center);
+                            }
                           }
-                        }
-                      },
-                    )
-            ],
+                        },
+                      )
+              ],
+            ),
           ),
         ),
       ),

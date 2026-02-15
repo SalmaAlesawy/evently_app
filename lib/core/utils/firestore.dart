@@ -51,7 +51,8 @@ abstract class FireStoreUtils {
     return collectionRef.snapshots();
   }
 
-  static Stream<DocumentSnapshot<EventDataModel>> getSingleEventStream(String eventId){
+  static Stream<DocumentSnapshot<EventDataModel>> getSingleEventStream(
+      String eventId) {
     return getCollectionRef().doc(eventId).snapshots();
   }
 
@@ -61,23 +62,20 @@ abstract class FireStoreUtils {
   }
 
   static Future<bool> updateEvent(EventDataModel event) async {
-    try{
+    try {
       print("Event Id ${event.eventId}");
-    CollectionReference collectionReference = getCollectionRef();
-    var docRef = collectionReference.doc(event.eventId);
-   await docRef.update(event.toFireStore());
-    return true;
-  }
-  catch(error){
+      CollectionReference collectionReference = getCollectionRef();
+      var docRef = collectionReference.doc(event.eventId);
+      await docRef.update(event.toFireStore());
+      return true;
+    } catch (error) {
       return false;
-  }
+    }
   }
 
   static Future<void> deleteEvent(EventDataModel data) async {
-
     CollectionReference collectionReference = getCollectionRef();
     var docRef = collectionReference.doc(data.eventId);
     docRef.delete();
   }
-
 }

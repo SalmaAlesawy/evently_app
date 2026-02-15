@@ -1,19 +1,29 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:toastification/toastification.dart';
 
 class FireBaseAuthUtils {
-
-  Future<void> SignOut()async{
+  Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }
-  static Future<bool> signUp(String emailAddress, String password) async {
+
+  static Future<bool> signUp(
+      String name, String emailAddress, String password) async {
     try {
-      var fireBaseAuth = FirebaseAuth.instance;
-       await fireBaseAuth.createUserWithEmailAndPassword(
+      final userCredential = await FirebaseAuth.instance.
+       createUserWithEmailAndPassword(
         email: emailAddress,
         password: password,
       );
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(userCredential.user!.uid)
+          .set({
+        "name": name,
+        "email": emailAddress.trim(),
+        "uid": userCredential.user!.uid,
+      });
       return Future.value(true);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -41,9 +51,15 @@ class FireBaseAuthUtils {
   static Future<bool> signInWithEmailAndPassword(
       String emailAddress, String password) async {
     try {
-       await FirebaseAuth.instance
+      final uid=FirebaseAuth.instance.currentUser!.uid;
+     var fireBaseAuth= await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: emailAddress, password: password);
+
+     final doc=await FirebaseFirestore.instance.collection("users").doc(uid).get();
+
       return Future.value(true);
+
+
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-credential') {
         toastification.show(

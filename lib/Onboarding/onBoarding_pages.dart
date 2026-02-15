@@ -15,7 +15,7 @@ class OnboardingPages extends StatelessWidget {
   const OnboardingPages({super.key});
   @override
   Widget build(BuildContext context) {
-    final provider=Provider.of<AppSettingProvider>(context);
+    final provider = Provider.of<AppSettingProvider>(context);
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
@@ -26,12 +26,15 @@ class OnboardingPages extends StatelessWidget {
                   controller.hasClients ? controller.page?.round() ?? 0 : 0;
               return currentPage != 0
                   ? IconButton(
-                
                       style: ButtonStyle(
-                          backgroundColor:
-                              WidgetStatePropertyAll( provider.themeMode==ThemeMode.light?LightColorPalette.white:DarkColorPalette.darkInputs),
+                          backgroundColor: WidgetStatePropertyAll(
+                              provider.themeMode == ThemeMode.light
+                                  ? LightColorPalette.white
+                                  : DarkColorPalette.darkInputs),
                           foregroundColor: WidgetStatePropertyAll(
-                              provider.themeMode==ThemeMode.light? LightColorPalette.lightMainColor:DarkColorPalette.white),
+                              provider.themeMode == ThemeMode.light
+                                  ? LightColorPalette.lightMainColor
+                                  : DarkColorPalette.white),
                           shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8)))),
                       onPressed: () {
@@ -45,16 +48,23 @@ class OnboardingPages extends StatelessWidget {
                     );
             }),
         backgroundColor: Colors.transparent,
-        title: provider.themeMode==ThemeMode.light? Assets.images.eventlyLogo.image(width: 243, height: 32):Assets.images.darkEventlyLogo.image(width: 243, height: 32),
+        title: provider.themeMode == ThemeMode.light
+            ? Assets.images.eventlyLogo.image(width: 243, height: 32)
+            : Assets.images.darkEventlyLogo.image(width: 243, height: 32),
         centerTitle: true,
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor:
-                      WidgetStatePropertyAll( provider.themeMode==ThemeMode.light?LightColorPalette.white:DarkColorPalette.darkInputs),
-                  foregroundColor: WidgetStatePropertyAll( provider.themeMode==ThemeMode.light?LightColorPalette.lightMainColor:DarkColorPalette.white),
+                  backgroundColor: WidgetStatePropertyAll(
+                      provider.themeMode == ThemeMode.light
+                          ? LightColorPalette.white
+                          : DarkColorPalette.darkInputs),
+                  foregroundColor: WidgetStatePropertyAll(
+                      provider.themeMode == ThemeMode.light
+                          ? LightColorPalette.lightMainColor
+                          : DarkColorPalette.white),
                   shape: WidgetStatePropertyAll(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadiusGeometry.circular(10),
@@ -62,12 +72,14 @@ class OnboardingPages extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, PageRouteName.loginScreen);
+                  Navigator.pushReplacementNamed(
+                      context, PageRouteName.loginScreen);
                 },
                 child: Text(
                   "Skip",
-                  style: textTheme.bodyMedium
-                      ,
+                  style: provider.themeMode==ThemeMode.light?textTheme.bodyMedium?.copyWith(color: LightColorPalette.lightMainText):textTheme.bodyMedium?.copyWith(
+                    color: DarkColorPalette.darkInputs
+                  ),
                 )),
           )
         ],
@@ -81,18 +93,24 @@ class OnboardingPages extends StatelessWidget {
               OnboardingPagesDetails(
                 title: AppTexts.onBoardingTitle1,
                 description: AppTexts.onBoardingDescription1,
-                image:  provider.themeMode==ThemeMode.light? Assets.images.hotTrending.keyName:Assets.images.darkHotTrending1.keyName,
+                image: provider.themeMode == ThemeMode.light
+                    ? Assets.images.hotTrending.keyName
+                    : Assets.images.darkHotTrending1.keyName,
               ),
               OnboardingPagesDetails(
                 title: AppTexts.onBoardingTitle2,
                 description: AppTexts.onBoardingDescription2,
-                image:  provider.themeMode==ThemeMode.light? Assets.images.eventPlanning.keyName:Assets.images.darkEventPlanning.keyName,
+                image: provider.themeMode == ThemeMode.light
+                    ? Assets.images.eventPlanning.keyName
+                    : Assets.images.darkEventPlanning.keyName,
               ),
               OnboardingPagesDetails(
                 doneText: "Get Started",
                 title: AppTexts.onBoardingTitle3,
                 description: AppTexts.onBoardingDescription3,
-                image:  provider.themeMode==ThemeMode.light? Assets.images.connectWithFriends.keyName:Assets.images.darkSharewithfriends.keyName,
+                image: provider.themeMode == ThemeMode.light
+                    ? Assets.images.connectWithFriends.keyName
+                    : Assets.images.darkSharewithfriends.keyName,
               ),
             ],
           ),

@@ -1,6 +1,8 @@
 import 'package:eventapp/app_setting_provider/app_setting_provider.dart';
 import 'package:eventapp/core/theme/ColorPalette.dart';
+import 'package:eventapp/core/utils/Firebase_auth_utils.dart';
 import 'package:eventapp/widgets/CustomContainer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,8 +11,13 @@ import '../../core/gen/assets.gen.dart';
 class Profilescreen extends StatelessWidget {
   const Profilescreen({super.key});
 
+
+
   @override
   Widget build(BuildContext context) {
+    User?user=FirebaseAuth.instance.currentUser;
+    String? emeil=user?.email;
+    String? name=user?.displayName;
     TextTheme textTheme = Theme.of(context).textTheme;
     final provider = Provider.of<AppSettingProvider>(context);
     return SafeArea(
@@ -36,14 +43,14 @@ class Profilescreen extends StatelessWidget {
                 height: 20,
               ),
               Text(
-                "John Safwat",
+                name==null?"Salma":name,
                 style: textTheme.titleLarge,
               ),
               const SizedBox(
                 height: 10,
               ),
               Text(
-                "johnsafwat.route@gmail.com",
+               emeil==null? "":emeil ,
                 style: textTheme.bodyMedium?.copyWith(
                     color: provider.themeMode == ThemeMode.light
                         ? LightColorPalette.lightSecText
