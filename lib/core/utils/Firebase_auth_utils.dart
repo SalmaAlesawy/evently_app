@@ -51,15 +51,9 @@ class FireBaseAuthUtils {
   static Future<bool> signInWithEmailAndPassword(
       String emailAddress, String password) async {
     try {
-      final uid=FirebaseAuth.instance.currentUser!.uid;
      var fireBaseAuth= await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: emailAddress, password: password);
-
-     final doc=await FirebaseFirestore.instance.collection("users").doc(uid).get();
-
       return Future.value(true);
-
-
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-credential') {
         toastification.show(
